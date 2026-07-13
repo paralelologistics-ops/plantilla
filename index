@@ -255,7 +255,7 @@
     <script>
         // --- 1. CONFIGURACIÓN DE TU BASE DE DATOS GRATUITA ---
         // VARIABLE MÁGICA: Aquí pegaremos el enlace que nos dará Google Apps Script
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzHzrEcySTMcybF9uVo1eL_SgS36UBacNwfj_anhvC6W0LC5Sd2NczU-joAVWLt7XwF/exec";
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/library/d/1_KKdF9BgF7H39mwZOSWOVBbgbawWIHTOXgy5cLSoWaterIGH-rG9a67C/3";
 
         let dbOrders = []; // Iniciamos sin pedidos. La web los traerá del Excel.
 
