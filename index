@@ -255,7 +255,7 @@
     <script>
         // --- 1. CONFIGURACIÓN DE TU BASE DE DATOS GRATUITA ---
         // VARIABLE MÁGICA: Aquí pegaremos el enlace que nos dará Google Apps Script
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/library/d/1_KKdF9BgF7H39mwZOSWOVBbgbawWIHTOXgy5cLSoWaterIGH-rG9a67C/3";
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx72MNLOn6uikZVcx-T4cqek45OK6CQ2id9-iNSI1fpjPyF9PCLE3RNxL3wnVAEZ4gj/exec";
 
         let dbOrders = []; // Iniciamos sin pedidos. La web los traerá del Excel.
 
@@ -372,14 +372,19 @@
             // Mostramos una animación de carga mientras traemos los datos de internet
             tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500"><div class="loader inline-block mr-2"></div> Cargando pedidos desde tu Google Sheets...</td></tr>`;
             
-            if(GOOGLE_WEB_APP_URL === "https://script.google.com/macros/library/d/1_KKdF9BgF7H39mwZOSWOVBbgbawWIHTOXgy5cLSoWaterIGH-rG9a67C/3") {
+            if(GOOGLE_WEB_APP_URL === "https://script.google.com/macros/s/AKfycbx72MNLOn6uikZVcx-T4cqek45OK6CQ2id9-iNSI1fpjPyF9PCLE3RNxL3wnVAEZ4gj/exec") {
                  tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Falta pegar el link de Google Web App en el código HTML.</td></tr>`;
                  return;
             }
 
             try {
-                // Hacemos la llamada telefónica al Excel
-                const respuesta = await fetch(GOOGLE_WEB_APP_URL);
+                // Hacemos la llamada telefónica al Excel asegurando seguir la redirección
+                const respuesta = await fetch(GOOGLE_WEB_APP_URL, { redirect: "follow" });
+                
+                if (!respuesta.ok) {
+                    throw new Error(`Error de conexión: ${respuesta.status}`);
+                }
+
                 const datosExcel = await respuesta.json();
                 
                 // Filtramos las filas vacías y mapeamos los nombres exactos de tus columnas
@@ -397,7 +402,14 @@
                 // Dibujamos la tabla
                 renderTable();
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500 font-medium">Error al conectar con Google Sheets. Verifica el link.</td></tr>`;
+                // Si da error 403 o de red, mostramos instrucciones claras
+                tableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center py-8">
+                        <div class="text-red-500 font-medium mb-2"><i class="fa-solid fa-circle-xmark"></i> Acceso Denegado (Error 403) o Link Inválido</div>
+                        <p class="text-slate-500 text-xs">Vuelve a Google Apps Script > Implementar > Nueva Implementación.<br>Asegúrate de que 'Quién tiene acceso' sea <b>'Cualquier persona'</b> (no 'Cualquier persona con cuenta de Google').</p>
+                    </td>
+                </tr>`;
                 console.error(error);
             }
         }
