@@ -385,12 +385,13 @@
 
                 const datosExcel = await respuesta.json();
                 
-                // Filtramos las filas vacías y mapeamos los nombres exactos de tus columnas
-                dbOrders = datosExcel.filter(fila => fila['Pedido']).map(fila => {
+                // Filtramos las filas vacías y mapeamos los nombres EXACTOS de tus columnas
+                // Ahora buscamos con "#" o sin "#" para que nunca falle
+                dbOrders = datosExcel.filter(fila => fila['# Pedido'] || fila['Pedido']).map(fila => {
                     return {
-                        id: fila['Pedido'],
+                        id: fila['# Pedido'] || fila['Pedido'] || 'S/N',
                         cliente: fila['Nombre completo'] || 'Sin nombre',
-                        articulo: fila['Referencia'] + ' (' + fila['Talla'] + ')',
+                        articulo: (fila['Referencia'] || '') + ' (' + (fila['Talla'] || '') + ')',
                         estadoConf: fila['Estado'] || 'Normal',
                         estadoEnvio: fila['Enviado'] || 'No Enviado',
                         guia: fila['Guia'] ? fila['Guia'] : null
