@@ -255,7 +255,7 @@
     <script>
         // --- 1. CONFIGURACIÓN DE TU BASE DE DATOS GRATUITA ---
         // VARIABLE MÁGICA: Aquí pegaremos el enlace que nos dará Google Apps Script
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxuF2qC-g8PIWQ-a0Idc9LZVvWmBvgKTBDRh5SiA6mFxOZiOy6IwNWyaJlxst7CIGHa/exec";
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw1uY8viR47irB8TTosVEZnK-qSShClMVdVDY2AFCUfmyWQlPnN9K3y79-CwFQ6DL7u/exec";
 
         let dbOrders = []; // Iniciamos sin pedidos. La web los traerá del Excel.
 
@@ -372,7 +372,7 @@
             // Mostramos una animación de carga mientras traemos los datos de internet
             tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500"><div class="loader inline-block mr-2"></div> Cargando pedidos desde tu Google Sheets...</td></tr>`;
             
-           if(GOOGLE_WEB_APP_URL === "https://script.google.com/macros/s/AKfycbxuF2qC-g8PIWQ-a0Idc9LZVvWmBvgKTBDRh5SiA6mFxOZiOy6IwNWyaJlxst7CIGHa/exec" || GOOGLE_WEB_APP_URL === "") {
+           if(GOOGLE_WEB_APP_URL === "https://script.google.com/macros/s/AKfycbw1uY8viR47irB8TTosVEZnK-qSShClMVdVDY2AFCUfmyWQlPnN9K3y79-CwFQ6DL7u/exec" || GOOGLE_WEB_APP_URL === "") {
             }
 
             try {
