@@ -213,10 +213,9 @@
                             <tr>
                                 <th class="px-6 py-3">No. Pedido</th>
                                 <th class="px-6 py-3">Cliente</th>
-                                <th class="px-6 py-3">Artículo (Talla)</th>
+                                <th class="px-6 py-3">Artículo (Detalle)</th>
                                 <th class="px-6 py-3">Estado</th>
-                                <th class="px-6 py-3">Canal</th>
-                                <th class="px-6 py-3 text-center">Acciones Rápidas</th>
+                                <th class="px-6 py-3 text-center">Gestión Logística</th>
                             </tr>
                         </thead>
                         <tbody id="orders-table-body" class="divide-y divide-slate-100">
@@ -297,7 +296,7 @@
     <script>
         // --- 1. CONFIGURACIÓN DE TU BASE DE DATOS GRATUITA ---
         // VARIABLE MÁGICA: Aquí pegaremos el enlace que nos dará Google Apps Script
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlZrCGqE1JtcP75MOIPS4TN42B8vOyVtrzVNEsVq_9LPpe0VS07VFDhWF5yxbKxNbi/exec";
+        const GOOGLE_WEB_APP_URL = "PEGAR_AQUI_TU_LINK_DE_GOOGLE";
 
         let dbOrders = []; // Iniciamos sin pedidos. La web los traerá del Excel.
 
@@ -330,11 +329,6 @@
                 if(order.estadoConf === 'Empacado') badgeConf = 'bg-blue-100 text-blue-700';
                 if(order.estadoConf === 'Ingresado' || order.estadoConf === 'Normal') badgeConf = 'bg-amber-100 text-amber-700';
 
-                let badgeEnvio = order.guia ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-700';
-                let envioText = order.guia ? `Guía: ${order.guia}` : 'Sin Guía';
-
-                let canalBadge = order.medio === 'Instagram' ? '<i class="fa-brands fa-instagram text-pink-500"></i> IG' : '<i class="fa-solid fa-globe text-slate-400"></i> Web';
-
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 transition-colors group";
                 
@@ -348,28 +342,27 @@
                         <div class="text-xs text-slate-500 mt-1 truncate max-w-[200px]" title="${order.ciudad}">${order.ciudad}</div>
                     </td>
                     <td class="px-6 py-4 text-slate-600">
-                        ${order.articulo} <br>
-                        <span class="text-xs text-slate-400">Urgencia: ${order.urgencia}</span>
+                        ${order.articulo}
                     </td>
                     <td class="px-6 py-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeConf}">
                             ${order.estadoConf}
                         </span>
                     </td>
-                    <td class="px-6 py-4 text-slate-500 text-sm">
-                        ${canalBadge}
-                    </td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center gap-2" id="celda-acciones-${order.id}">
                             ${!order.guia ? `
-                                <button onclick="simulateGenerateGuia('${order.id}', ${index})" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-medium transition-colors" title="Generar Guía Automática">
-                                    <i class="fa-solid fa-qrcode"></i> Crear Guía
+                                <button onclick="simulateGenerateGuia('${order.id}', ${index}, 'nacional')" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-medium transition-colors" title="Transportadora Nacional">
+                                    <i class="fa-solid fa-truck"></i> Guía Nac.
+                                </button>
+                                <button onclick="simulateGenerateGuia('${order.id}', ${index}, 'local')" class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg text-xs font-medium transition-colors" title="Domicilio Local (Moto)">
+                                    <i class="fa-solid fa-motorcycle"></i> Moto
                                 </button>
                             ` : `
-                                <button onclick="showModal('Imprimir PDF', 'Abriendo el PDF de la guía ${order.guia} para la impresora térmica.', 'info')" class="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-medium transition-colors" title="Imprimir PDF">
-                                    <i class="fa-solid fa-print"></i>
-                                </button>
-                                <button onclick="notifyWhatsApp('${order.id}', '${order.cliente}', '${order.guia}')" class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs font-medium transition-colors" title="Notificar por WhatsApp">
+                                <span class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium flex items-center gap-2">
+                                    <i class="fa-solid fa-check-circle text-emerald-500"></i> Despachado
+                                </span>
+                                <button onclick="notifyWhatsApp('${order.id}', '${order.cliente}', '${order.guia}')" class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs font-medium transition-colors" title="Notificar al Cliente">
                                     <i class="fa-brands fa-whatsapp text-sm"></i>
                                 </button>
                             `}
@@ -411,34 +404,50 @@
         }
 
         /**
-         * STREAMING_CHUNK:Lógica para navegar entre las vistas (Single Page Application)...
+         * STREAMING_CHUNK:Lógica de simulación de automatizaciones (Coordinadora, Domicilios & WhatsApp)...
          */
-        
-        function cambiarVista(vistaId, elementoNav) {
-            // 1. Ocultar todas las vistas de la App
-            document.querySelectorAll('.vista-app').forEach(vista => {
-                vista.classList.add('hidden');
-            });
+
+        // Simular conexión a Logística (Nacional o Local)
+        function simulateGenerateGuia(orderId, index, tipoEnvio) {
+            const btnContainer = document.getElementById(`celda-acciones-${orderId}`);
             
-            // 2. Mostrar únicamente la vista seleccionada
-            document.getElementById(`vista-${vistaId}`).classList.remove('hidden');
+            // UI de Carga
+            btnContainer.innerHTML = `
+                <div class="flex items-center gap-2 px-3 py-1.5 text-slate-600 text-xs font-medium">
+                    <div class="loader" style="width: 14px; height: 14px; border-width: 2px;"></div> Procesando...
+                </div>
+            `;
 
-            // 3. Quitar el estilo "Activo" (azul oscuro) de todos los botones del menú lateral
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.className = "nav-link flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors";
-            });
+            // Simular tiempo de respuesta de red (1.5 segundos)
+            setTimeout(() => {
+                let mockTracking = "";
+                let mensajeExito = "";
+                
+                if(tipoEnvio === 'nacional') {
+                    mockTracking = "CM" + Math.floor(100000000 + Math.random() * 900000000);
+                    mensajeExito = `Se ha generado la guía exitosamente con Coordinadora.\n\nTracking: ${mockTracking}\n\nListo para imprimir etiqueta térmica.`;
+                } else {
+                    mockTracking = "MOTO-" + Math.floor(1000 + Math.random() * 9000);
+                    mensajeExito = `Se ha asignado el domiciliario local (Moto).\n\nCódigo de Despacho: ${mockTracking}\n\nEl repartidor fue notificado.`;
+                }
+                
+                // Actualizar Base de Datos local
+                dbOrders[index].guia = mockTracking;
+                
+                // Mostrar éxito
+                showModal('¡Despacho Asignado!', mensajeExito, 'success');
+                
+                // Re-renderizar tabla para mostrar los nuevos botones
+                renderTable();
+            }, 1500);
+        }
 
-            // 4. Poner el estilo "Activo" al botón al que le acabamos de hacer clic
-            elementoNav.className = "nav-link flex items-center gap-3 px-3 py-2.5 bg-indigo-50 text-indigo-700 rounded-lg font-medium";
-
-            // 5. Cambiar el título dinámico superior
-            const titulos = {
-                'pedidos': 'Gestión de Pedidos',
-                'logistica': 'Logística & Envíos',
-                'crm': 'Directorio de Clientes (CRM)',
-                'reportes': 'Reportes y Métricas'
-            };
-            document.getElementById('header-title').textContent = titulos[vistaId];
+        // Simular envío de WhatsApp (Conexión CRM)
+        function notifyWhatsApp(orderId, cliente, tracking) {
+            let tipo = tracking.startsWith("MOTO") ? "va en camino con nuestro domiciliario local" : "ha sido despachado por transportadora";
+            const msg = `Hola ${cliente} 👋. \n\n¡Tu pedido #${orderId} ya ${tipo}!\n\nCódigo/Guía: ${tracking}\n\nGracias por tu compra.`;
+            
+            showModal('Notificación Automática', `Se simuló el envío del siguiente mensaje al cliente:\n\n"${msg}"`, 'success');
         }
 
         /**
@@ -449,8 +458,9 @@
             // Mostramos una animación de carga mientras traemos los datos de internet
             tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500"><div class="loader inline-block mr-2"></div> Cargando pedidos desde tu Google Sheets...</td></tr>`;
             
-            if(GOOGLE_WEB_APP_URL === "https://script.google.com/macros/library/d/1_KKdF9BgF7H39mwZOSWOVBbgbawWIHTOXgy5cLSoWaterIGH-rG9a67C/7" || GOOGLE_WEB_APP_URL === "") {
-                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Falta pegar el link de Google Web App en el código HTML.</td></tr>`;
+            // LA CONDICIÓN ARREGLADA (¡No pongas tu URL aquí adentro!)
+            if(GOOGLE_WEB_APP_URL === "PEGAR_AQUI_TU_LINK_DE_GOOGLE" || GOOGLE_WEB_APP_URL === "" || GOOGLE_WEB_APP_URL.includes("library")) {
+                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Error: Asegúrate de pegar el link correcto que termina en "/exec".</td></tr>`;
                  return;
             }
 
