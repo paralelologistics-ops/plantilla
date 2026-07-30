@@ -9,59 +9,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
-        }
-        
-        /* Animaciones para los modales */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .modal-overlay {
-            animation: fadeIn 0.2s ease-out;
-        }
-        .modal-content {
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-
-        /* Spinner de carga */
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-overlay { animation: fadeIn 0.2s ease-out; }
+        .modal-content { animation: slideUp 0.3s ease-out; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .loader {
-            border: 3px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 3px solid #4f46e5; /* indigo-600 */
-            width: 20px;
-            height: 20px;
-            -webkit-animation: spin 1s linear infinite; /* Safari */
-            animation: spin 1s linear infinite;
+            border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #4f46e5;
+            width: 20px; height: 20px; animation: spin 1s linear infinite;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="text-slate-800 antialiased h-screen flex overflow-hidden">
@@ -77,60 +38,22 @@
         <nav class="flex-1 overflow-y-auto py-4">
             <ul class="space-y-1 px-3" id="nav-menu">
                 <li>
-                    <a href="#" onclick="cambiarVista('pedidos', this)" class="nav-link flex items-center gap-3 px-3 py-2.5 bg-indigo-50 text-indigo-700 rounded-lg font-medium">
-                        <i class="fa-solid fa-box w-5 text-center"></i>
-                        Gestión de Pedidos
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="cambiarVista('logistica', this)" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-                        <i class="fa-solid fa-truck-fast w-5 text-center"></i>
-                        Logística & Envíos
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="cambiarVista('crm', this)" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-                        <i class="fa-solid fa-users w-5 text-center"></i>
-                        Directorio CRM
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="cambiarVista('reportes', this)" class="nav-link flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-                        <i class="fa-solid fa-chart-simple w-5 text-center"></i>
-                        Reportes
+                    <a href="#" class="nav-link flex items-center gap-3 px-3 py-2.5 bg-indigo-50 text-indigo-700 rounded-lg font-medium">
+                        <i class="fa-solid fa-box w-5 text-center"></i> Gestión de Pedidos
                     </a>
                 </li>
             </ul>
         </nav>
-        
-        <div class="p-4 border-t border-slate-100">
-            <a href="#" class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-slate-800 transition-colors">
-                <i class="fa-solid fa-gear w-5 text-center"></i>
-                <span>Configuración</span>
-            </a>
-        </div>
     </aside>
 
     <main class="flex-1 flex flex-col h-full overflow-hidden relative">
-        
-        <!-- Header Superior -->
         <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-10 sticky top-0">
             <div class="flex items-center gap-4">
-                <button class="md:hidden text-slate-500 hover:text-slate-800">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <h1 id="header-title" class="text-xl font-semibold text-slate-800">Gestión de Pedidos</h1>
+                <h1 class="text-xl font-semibold text-slate-800">Gestión de Pedidos & Logística</h1>
             </div>
-            
             <div class="flex items-center gap-4">
-                <button class="text-slate-400 hover:text-indigo-600 transition-colors relative">
-                    <i class="fa-solid fa-bell text-lg"></i>
-                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-                </button>
                 <div class="flex items-center gap-2 pl-4 border-l border-slate-200">
-                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">
-                        PT
-                    </div>
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">PT</div>
                     <span class="text-sm font-medium hidden sm:block">Paralelo Trendy</span>
                 </div>
             </div>
@@ -138,13 +61,12 @@
 
         <div class="flex-1 overflow-auto p-6" id="main-content">
             
-            <!-- VISTA 1: GESTIÓN DE PEDIDOS (La tabla y KPIs que ya teníamos) -->
-            <div id="vista-pedidos" class="vista-app">
-                <!-- KPIs -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm font-medium text-slate-500 mb-1">Pendientes de Guía</p>
-                            <h3 class="text-2xl font-bold text-slate-800" id="kpi-pendientes">--</h3>
+                            <h3 class="text-2xl font-bold text-amber-600" id="kpi-pendientes">--</h3>
                         </div>
                         <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
                             <i class="fa-solid fa-file-invoice"></i>
@@ -155,129 +77,47 @@
                 <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-sm font-medium text-slate-500 mb-1">En Producción</p>
-                            <h3 class="text-2xl font-bold text-slate-800">4</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                            <i class="fa-solid fa-scissors"></i>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-slate-500 mb-1">Despachados Hoy</p>
-                            <h3 class="text-2xl font-bold text-slate-800">12</h3>
-                        </div>
-                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                            <i class="fa-solid fa-truck-ramp-box"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-slate-500 mb-1">Sincronización</p>
+                            <p class="text-sm font-medium text-slate-500 mb-1">Conexión Sistema</p>
                             <h3 class="text-sm font-bold text-emerald-600 mt-2 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Conectado a Sheets
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> En Vivo
                             </h3>
                         </div>
-                        <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center">
-                            <i class="fa-brands fa-google-drive"></i>
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i class="fa-brands fa-whatsapp"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-                <!-- Toolbar de la tabla -->
                 <div class="px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <h2 class="text-lg font-semibold text-slate-800">Últimos Pedidos (Google Sheets)</h2>
-                    <div class="flex gap-2 w-full sm:w-auto">
-                        <div class="relative w-full sm:w-64">
-                            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                            <input type="text" placeholder="Buscar pedido..." class="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-                        </div>
-                        <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2" onclick="showModal('Sincronizando', 'Sincronizando datos con Google Sheets...', 'success')">
-                            <i class="fa-solid fa-rotate-right"></i> <span class="hidden sm:inline">Sincronizar</span>
-                        </button>
-                    </div>
+                    <h2 class="text-lg font-semibold text-slate-800">Últimos Despachos (Sincronizado)</h2>
+                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2" onclick="cargarPedidosDesdeGoogle()">
+                        <i class="fa-solid fa-rotate-right"></i> Sincronizar Ahora
+                    </button>
                 </div>
 
-                <!-- Tabla Responsive -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm whitespace-nowrap">
                         <thead class="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                             <tr>
-                                <th class="px-6 py-3">No. Pedido</th>
-                                <th class="px-6 py-3">Cliente</th>
-                                <th class="px-6 py-3">Artículo (Detalle)</th>
-                                <th class="px-6 py-3">Estado</th>
-                                <th class="px-6 py-3 text-center">Gestión Logística</th>
+                                <th class="px-6 py-3"># Pedido</th>
+                                <th class="px-6 py-3">Cliente (Datos)</th>
+                                <th class="px-6 py-3">Destino</th>
+                                <th class="px-6 py-3">Prenda & Detalle</th>
+                                <th class="px-6 py-3">Estado / Pago</th>
+                                <th class="px-6 py-3 text-center">Acción Logística</th>
                             </tr>
                         </thead>
                         <tbody id="orders-table-body" class="divide-y divide-slate-100">
-                            <!-- Los datos se inyectarán aquí vía JavaScript -->
+                            <!-- Datos inyectados vía JS -->
                         </tbody>
                     </table>
                 </div>
-                
-                <div class="px-6 py-4 border-t border-slate-200 bg-slate-50 text-xs text-slate-500 flex justify-between items-center">
-                    <span>Mostrando datos sincronizados</span>
-                    <div class="flex gap-1">
-                        <button class="px-2 py-1 border border-slate-300 rounded hover:bg-slate-100 disabled:opacity-50" disabled><i class="fa-solid fa-chevron-left"></i></button>
-                        <button class="px-2 py-1 border border-slate-300 rounded hover:bg-slate-100 disabled:opacity-50" disabled><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                </div>
             </div>
-            </div> <!-- Cierre de VISTA 1 -->
-
-            <!-- VISTA 2: LOGÍSTICA & ENVÍOS (Mockup) -->
-            <div id="vista-logistica" class="vista-app hidden">
-                <div class="bg-white rounded-xl border border-slate-200 p-8 text-center shadow-sm flex flex-col items-center justify-center min-h-[400px]">
-                    <div class="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center text-2xl mb-4">
-                        <i class="fa-solid fa-truck-fast"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Módulo de Logística Centralizada</h2>
-                    <p class="text-slate-500 max-w-md mx-auto mb-6">Aquí conectaremos el mapa en tiempo real de tus despachos y las integraciones automáticas con Coordinadora, Inter Rapidísimo y Envía.</p>
-                    <img src="https://placehold.co/600x300/f8fafc/94a3b8?text=Mapa+de+Rutas+Logísticas" alt="Mapa Logístico" class="rounded-lg border border-slate-200 shadow-sm w-full max-w-3xl">
-                </div>
-            </div>
-
-            <!-- VISTA 3: DIRECTORIO CRM (Mockup) -->
-            <div id="vista-crm" class="vista-app hidden">
-                <div class="bg-white rounded-xl border border-slate-200 p-8 text-center shadow-sm flex flex-col items-center justify-center min-h-[400px]">
-                    <div class="w-16 h-16 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center text-2xl mb-4">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Directorio Inteligente de Clientes (CRM)</h2>
-                    <p class="text-slate-500 max-w-md mx-auto mb-6">El historial de compras de Paola, Laura, Alba y todos tus clientes se organizará aquí automáticamente desde WhatsApp para campañas de fidelización.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl mt-4">
-                        <div class="border border-slate-200 rounded-lg p-5 text-left bg-slate-50"><div class="font-bold text-slate-800 text-lg">Alba Rodriguez</div><div class="text-sm text-indigo-600 font-medium mb-2">Cliente VIP</div><div class="text-xs text-slate-500"><i class="fa-solid fa-bag-shopping mr-1"></i>4 Compras (Izabella Dress)</div></div>
-                        <div class="border border-slate-200 rounded-lg p-5 text-left bg-slate-50"><div class="font-bold text-slate-800 text-lg">Laura Morantes</div><div class="text-sm text-emerald-600 font-medium mb-2">Cliente Recurrente</div><div class="text-xs text-slate-500"><i class="fa-solid fa-bag-shopping mr-1"></i>2 Compras (Pant Cargo)</div></div>
-                        <div class="border border-slate-200 rounded-lg p-5 text-left bg-slate-50"><div class="font-bold text-slate-800 text-lg">Paola Cabarcas</div><div class="text-sm text-amber-600 font-medium mb-2">Cliente Potencial</div><div class="text-xs text-slate-500"><i class="fa-solid fa-bag-shopping mr-1"></i>1 Compra (Pant Madeira)</div></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- VISTA 4: REPORTES (Mockup) -->
-            <div id="vista-reportes" class="vista-app hidden">
-                <div class="bg-white rounded-xl border border-slate-200 p-8 text-center shadow-sm flex flex-col items-center justify-center min-h-[400px]">
-                    <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center text-2xl mb-4">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Reportes Financieros y Métricas</h2>
-                    <p class="text-slate-500 max-w-md mx-auto mb-6">Gráficos de ventas mensuales, prendas más vendidas (Ej. Pant Cargo Slim vs Top Martini) y cálculo de rentabilidad neta.</p>
-                    <img src="https://placehold.co/600x300/f8fafc/94a3b8?text=Gráfica+de+Ventas+Mensuales" alt="Gráfica Reportes" class="rounded-lg border border-slate-200 shadow-sm w-full max-w-3xl">
-                </div>
-            </div>
-
         </div>
     </main>
 
-    <!-- Modal Base (Oculto por defecto) -->
     <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="modal-overlay absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
         <div class="modal-content relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 overflow-hidden">
@@ -285,86 +125,244 @@
                 <i id="modal-icon" class="fa-solid text-xl"></i>
             </div>
             <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2">Título</h3>
-            <p id="modal-message" class="text-slate-600 mb-6 leading-relaxed">Mensaje del modal aquí.</p>
+            <p id="modal-message" class="text-slate-600 mb-6 leading-relaxed whitespace-pre-line">Mensaje.</p>
             <div class="flex justify-end gap-3">
-                <button id="modal-btn-cancel" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors hidden" onclick="closeModal()">Cancelar</button>
-                <button id="modal-btn-confirm" class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm" onclick="closeModal()">Entendido</button>
+                <button class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm bg-indigo-600 hover:bg-indigo-700" onclick="closeModal()">Entendido</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. CONFIGURACIÓN DE TU BASE DE DATOS GRATUITA ---
-        // VARIABLE MÁGICA: Aquí pegaremos el enlace que nos dará Google Apps Script
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyFAal54R_nzi0NVLRWEcU5t9oyrmncbXqhHJakAS_L_KCwWFcCDalZAO43QY2q_mFV/exec";
+        // =====================================================================
+        // ⚠️ CONFIGURACIÓN IMPORTANTE ⚠️
+        // =====================================================================
+        
+        // 1. Pega tu URL de Google Apps Script y SIEMPRE déjale el ?action=getPedidos al final
+        const GOOGLE_WEB_APP_URL = "<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SME AutoHub - Panel de Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-overlay { animation: fadeIn 0.2s ease-out; }
+        .modal-content { animation: slideUp 0.3s ease-out; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .loader {
+            border: 3px solid #f3f3f3; border-radius: 50%; border-top: 3px solid #4f46e5;
+            width: 20px; height: 20px; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-slate-800 antialiased h-screen flex overflow-hidden">
 
-        let dbOrders = []; // Iniciamos sin pedidos. La web los traerá del Excel.
+    <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col h-full shadow-sm z-10">
+        <div class="h-16 flex items-center px-6 border-b border-slate-100">
+            <div class="flex items-center gap-2 text-indigo-600">
+                <i class="fa-solid fa-bolt text-xl"></i>
+                <span class="text-lg font-bold tracking-tight">AutoHub<span class="text-slate-800">PYME</span></span>
+            </div>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3" id="nav-menu">
+                <li>
+                    <a href="#" class="nav-link flex items-center gap-3 px-3 py-2.5 bg-indigo-50 text-indigo-700 rounded-lg font-medium">
+                        <i class="fa-solid fa-box w-5 text-center"></i> Gestión de Pedidos
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-        // Referencias DOM
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        <header class="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-10 sticky top-0">
+            <div class="flex items-center gap-4">
+                <h1 class="text-xl font-semibold text-slate-800">Gestión de Pedidos & Logística</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 pl-4 border-l border-slate-200">
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">PT</div>
+                    <span class="text-sm font-medium hidden sm:block">Paralelo Trendy</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-auto p-6" id="main-content">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-500 mb-1">Pendientes de Guía</p>
+                            <h3 class="text-2xl font-bold text-amber-600" id="kpi-pendientes">--</h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-500 mb-1">Conexión Sistema</p>
+                            <h3 class="text-sm font-bold text-emerald-600 mt-2 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> En Vivo
+                            </h3>
+                        </div>
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                <div class="px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h2 class="text-lg font-semibold text-slate-800">Últimos Despachos (Sincronizado)</h2>
+                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm flex items-center gap-2" onclick="cargarPedidosDesdeGoogle()">
+                        <i class="fa-solid fa-rotate-right"></i> Sincronizar Ahora
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-3"># Pedido</th>
+                                <th class="px-6 py-3">Cliente (Datos)</th>
+                                <th class="px-6 py-3">Destino</th>
+                                <th class="px-6 py-3">Prenda & Detalle</th>
+                                <th class="px-6 py-3">Estado / Pago</th>
+                                <th class="px-6 py-3 text-center">Acción Logística</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body" class="divide-y divide-slate-100">
+                            <!-- Datos inyectados vía JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="modal-overlay absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="modal-content relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 overflow-hidden">
+            <div id="modal-icon-container" class="w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                <i id="modal-icon" class="fa-solid text-xl"></i>
+            </div>
+            <h3 id="modal-title" class="text-xl font-bold text-slate-800 mb-2">Título</h3>
+            <p id="modal-message" class="text-slate-600 mb-6 leading-relaxed whitespace-pre-line">Mensaje.</p>
+            <div class="flex justify-end gap-3">
+                <button class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm bg-indigo-600 hover:bg-indigo-700" onclick="closeModal()">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // ⚠️ CONFIGURACIÓN IMPORTANTE ⚠️
+        // =====================================================================
+        
+        // 1. Pega tu URL de Google Apps Script y SIEMPRE déjale el ?action=getPedidos al final
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyYbzwV_XWFv0UVntzywHCfie2Hiq8zawmOoc_HWxpg28nU_uMcTZQ63NAfnlMSwx9Z/exec?action=getPedidos";
+        
+        // 2. Número de tu mensajero/domiciliario local (Con código de país, ej: 573001234567)
+        const NUMERO_DOMICILIARIO = "573054813630"; 
+
+        // =====================================================================
+
+        let dbOrders = [];
         const tableBody = document.getElementById('orders-table-body');
         const kpiPendientes = document.getElementById('kpi-pendientes');
-        
-        // Elementos del Modal
         const modal = document.getElementById('custom-modal');
-        const modalIconContainer = document.getElementById('modal-icon-container');
-        const modalIcon = document.getElementById('modal-icon');
-        const modalTitle = document.getElementById('modal-title');
-        const modalMessage = document.getElementById('modal-message');
-        const modalBtnConfirm = document.getElementById('modal-btn-confirm');
 
-        /**
-         * STREAMING_CHUNK:Funciones para el manejo del DOM y Modales...
-         */
-        
-        // Renderizar tabla
+        // Construir la tabla con los datos
         function renderTable() {
             tableBody.innerHTML = '';
             let pendientes = 0;
 
+            if (dbOrders.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">No se encontraron pedidos recientes.</td></tr>`;
+                kpiPendientes.textContent = "0";
+                return;
+            }
+
             dbOrders.forEach((order, index) => {
                 if(!order.guia) pendientes++;
 
-                // Lógica de colores para estados
-                let badgeConf = 'bg-slate-100 text-slate-700';
-                if(order.estadoConf === 'Empacado') badgeConf = 'bg-blue-100 text-blue-700';
-                if(order.estadoConf === 'Ingresado' || order.estadoConf === 'Normal') badgeConf = 'bg-amber-100 text-amber-700';
-
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition-colors group";
+                tr.className = "hover:bg-slate-50 transition-colors";
                 
+                // Formato de Estado
+                let estadoClass = "bg-slate-100 text-slate-700";
+                if(order.estado.toLowerCase().includes("empacado")) estadoClass = "bg-blue-100 text-blue-700";
+                if(order.estado.toLowerCase().includes("normal")) estadoClass = "bg-amber-100 text-amber-700";
+
                 tr.innerHTML = `
-                    <td class="px-6 py-4 font-medium text-indigo-600">#${order.id}</td>
+                    <td class="px-6 py-4 font-bold text-indigo-600">#${order.id}</td>
+                    
                     <td class="px-6 py-4">
-                        <div class="flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-xs font-bold uppercase">${order.cliente.charAt(0)}</div>
-                            <span class="font-medium text-slate-700">${order.cliente}</span>
+                        <div class="font-medium text-slate-800">${order.cliente}</div>
+                        <div class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-phone mr-1"></i> ${order.telefono}</div>
+                        <div class="text-xs text-slate-500 truncate max-w-[180px]" title="${order.correo}">
+                            <i class="fa-solid fa-envelope mr-1"></i> ${order.correo}
                         </div>
-                        <div class="text-xs text-slate-500 mt-1 truncate max-w-[200px]" title="${order.ciudad}">${order.ciudad}</div>
                     </td>
-                    <td class="px-6 py-4 text-slate-600">
-                        ${order.articulo}
-                    </td>
+                    
                     <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeConf}">
-                            ${order.estadoConf}
-                        </span>
+                        <div class="font-medium text-slate-800">${order.ciudad}</div>
+                        <div class="text-xs text-slate-500 mt-1 truncate max-w-[180px]" title="${order.direccion}">
+                            <i class="fa-solid fa-location-dot mr-1"></i> ${order.direccion}
+                        </div>
                     </td>
+
+                    <td class="px-6 py-4">
+                        <div class="text-slate-800 font-medium truncate max-w-[150px]" title="${order.articulo}">${order.articulo}</div>
+                        <div class="text-xs text-slate-500 mt-1">
+                            Talla: <span class="font-bold text-slate-700">${order.talla}</span> | Cant: ${order.cantidad}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <div class="mb-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${estadoClass}">
+                                ${order.estado}
+                            </span>
+                        </div>
+                        <div>
+                            ${order.linkPago && order.linkPago.includes('http') ? 
+                              `<a href="${order.linkPago}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1 text-xs font-medium bg-indigo-50 px-2 py-1 rounded inline-flex"><i class="fa-solid fa-file-invoice-dollar"></i> Ver Soporte</a>` 
+                              : `<span class="text-slate-400 text-xs italic px-2 py-1 border border-dashed rounded">Sin soporte</span>`}
+                        </div>
+                    </td>
+
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center gap-2" id="celda-acciones-${order.id}">
                             ${!order.guia ? `
-                                <button onclick="simulateGenerateGuia('${order.id}', ${index}, 'nacional')" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-medium transition-colors" title="Transportadora Nacional">
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'nacional')" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-medium transition-colors border border-indigo-200" title="Generar Guía">
                                     <i class="fa-solid fa-truck"></i> Guía Nac.
                                 </button>
-                                <button onclick="simulateGenerateGuia('${order.id}', ${index}, 'local')" class="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg text-xs font-medium transition-colors" title="Domicilio Local (Moto)">
-                                    <i class="fa-solid fa-motorcycle"></i> Moto
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'local')" class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs font-medium transition-colors border border-green-200" title="Enviar info al Mensajero">
+                                    <i class="fa-brands fa-whatsapp"></i> Moto Domi
                                 </button>
                             ` : `
-                                <span class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium flex items-center gap-2">
+                                <span class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium flex items-center gap-2 border border-slate-200">
                                     <i class="fa-solid fa-check-circle text-emerald-500"></i> Despachado
                                 </span>
-                                <button onclick="notifyWhatsApp('${order.id}', '${order.cliente}', '${order.guia}')" class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs font-medium transition-colors" title="Notificar al Cliente">
-                                    <i class="fa-brands fa-whatsapp text-sm"></i>
-                                </button>
                             `}
                         </div>
                     </td>
@@ -375,178 +373,290 @@
             kpiPendientes.textContent = pendientes;
         }
 
-        // Sistema Custom Modal
-        function showModal(title, message, type = 'info') {
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            
-            // Estilos según el tipo
-            modalIcon.className = 'fa-solid text-xl ';
-            if(type === 'success') {
-                modalIconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-emerald-100 text-emerald-600';
-                modalIcon.className += 'fa-check';
-                modalBtnConfirm.className = 'px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm bg-emerald-600 hover:bg-emerald-700';
-            } else if(type === 'error') {
-                modalIconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-red-100 text-red-600';
-                modalIcon.className += 'fa-triangle-exclamation';
-                modalBtnConfirm.className = 'px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm bg-red-600 hover:bg-red-700';
-            } else { // info
-                modalIconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-indigo-100 text-indigo-600';
-                modalIcon.className += 'fa-circle-info';
-                modalBtnConfirm.className = 'px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors shadow-sm bg-indigo-600 hover:bg-indigo-700';
-            }
-
-            modal.classList.remove('hidden');
-        }
-
-        function closeModal() {
-            modal.classList.add('hidden');
-        }
-
-        /**
-         * STREAMING_CHUNK:Lógica de simulación de automatizaciones (Coordinadora, Domicilios & WhatsApp)...
-         */
-
-        // Simular conexión a Logística (Nacional o Local)
-        function simulateGenerateGuia(orderId, index, tipoEnvio) {
+        // Lógica de botones de envío (WhatsApp y Guías)
+        function gestionarEnvio(orderId, index, tipoEnvio) {
             const btnContainer = document.getElementById(`celda-acciones-${orderId}`);
+            const order = dbOrders[index];
             
-            // UI de Carga
-            btnContainer.innerHTML = `
-                <div class="flex items-center gap-2 px-3 py-1.5 text-slate-600 text-xs font-medium">
-                    <div class="loader" style="width: 14px; height: 14px; border-width: 2px;"></div> Procesando...
-                </div>
-            `;
+            // Animación de carga visual
+            btnContainer.innerHTML = `<div class="flex items-center gap-2 px-3 py-1.5 text-slate-600 text-xs font-medium"><div class="loader" style="width:14px;height:14px;border-width:2px;"></div> Procesando...</div>`;
 
-            // Simular tiempo de respuesta de red (1.5 segundos)
             setTimeout(() => {
-                let mockTracking = "";
-                let mensajeExito = "";
-                
-                if(tipoEnvio === 'nacional') {
-                    mockTracking = "CM" + Math.floor(100000000 + Math.random() * 900000000);
-                    mensajeExito = `Se ha generado la guía exitosamente con Coordinadora.\n\nTracking: ${mockTracking}\n\nListo para imprimir etiqueta térmica.`;
+                if(tipoEnvio === 'local') {
+                    // 1. LÓGICA DOMICILIARIO (Abriendo WHATSAPP WEB)
+                    const msgDomi = `🛵 *NUEVO DOMICILIO*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Dirección:* ${order.direccion}, ${order.ciudad}\n*Pedido:* #${order.id} - ${order.articulo} (Talla: ${order.talla} / Cantidad: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger a la tienda.`;
+                    
+                    // Abrimos ventana de WhatsApp
+                    window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
+                    
+                    showModal('¡WhatsApp Abierto!', `Se abrió una pestaña con los datos listos para enviar a tu domiciliario.\n\nEl sistema internamente lo marcará como: MOTO-${orderId}`, 'success');
+                    
+                    dbOrders[index].guia = "MOTO-" + orderId;
                 } else {
-                    mockTracking = "MOTO-" + Math.floor(1000 + Math.random() * 9000);
-                    mensajeExito = `Se ha asignado el domiciliario local (Moto).\n\nCódigo de Despacho: ${mockTracking}\n\nEl repartidor fue notificado.`;
+                    // 2. LÓGICA NACIONAL (Simulador API Transportadora)
+                    const mockTracking = "PT" + Math.floor(100000000 + Math.random() * 900000000);
+                    showModal('¡Guía Creada!', `Se ha generado la guía con éxito.\n\nTracking Nacional: ${mockTracking}\n\nPuedes proceder a imprimir la etiqueta térmica.`, 'success');
+                    
+                    dbOrders[index].guia = mockTracking;
                 }
                 
-                // Actualizar Base de Datos local
-                dbOrders[index].guia = mockTracking;
-                
-                // Mostrar éxito
-                showModal('¡Despacho Asignado!', mensajeExito, 'success');
-                
-                // Re-renderizar tabla para mostrar los nuevos botones
                 renderTable();
-            }, 1500);
+            }, 600);
         }
 
-        // Simular envío de WhatsApp (Conexión CRM)
-        function notifyWhatsApp(orderId, cliente, tracking) {
-            let tipo = tracking.startsWith("MOTO") ? "va en camino con nuestro domiciliario local" : "ha sido despachado por transportadora";
-            const msg = `Hola ${cliente} 👋. \n\n¡Tu pedido #${orderId} ya ${tipo}!\n\nCódigo/Guía: ${tracking}\n\nGracias por tu compra.`;
-            
-            showModal('Notificación Automática', `Se simuló el envío del siguiente mensaje al cliente:\n\n"${msg}"`, 'success');
-        }
-
-        /**
-         * STREAMING_CHUNK:Lógica para leer datos del Excel de forma remota (La API)...
-         */
-        
+        // Fetch de datos hacia el Google Apps Script
         async function cargarPedidosDesdeGoogle() {
-            // Mostramos una animación de carga mientras traemos los datos de internet
-            tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500"><div class="loader inline-block mr-2"></div> Cargando pedidos desde tu Google Sheets...</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-indigo-600"><div class="loader inline-block mr-2 border-indigo-600"></div> Sincronizando con la base de datos de Paralelo...</td></tr>`;
             
-            // LA CONDICIÓN ARREGLADA (¡No pongas tu URL aquí adentro!)
-            if(GOOGLE_WEB_APP_URL === "PEGAR_AQUI_TU_LINK_DE_GOOGLE" || GOOGLE_WEB_APP_URL === "" || GOOGLE_WEB_APP_URL.includes("library")) {
-                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Error: Asegúrate de pegar el link correcto que termina en "/exec".</td></tr>`;
+            if(GOOGLE_WEB_APP_URL.includes("PEGAR_AQUI")) {
+                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Error: No has pegado la URL de tu Google Script en el archivo HTML.</td></tr>`;
                  return;
             }
 
             try {
-                // Hacemos la llamada telefónica al Excel asegurando seguir la redirección
                 const respuesta = await fetch(GOOGLE_WEB_APP_URL, { redirect: "follow" });
-                
-                if (!respuesta.ok) {
-                    throw new Error(`Error de conexión: ${respuesta.status}`);
-                }
+                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
                 const datosExcel = await respuesta.json();
                 
-                // Filtramos las filas vacías y mapeamos los nombres EXACTOS de tus columnas
-                // Ahora buscamos con "#" o sin "#" para que nunca falle
-                dbOrders = datosExcel.filter(fila => fila['# Pedido'] || fila['Pedido']).map(fila => {
+                // Mapeo Inteligente a la estructura del nuevo Excel
+                dbOrders = datosExcel.filter(fila => fila['# Pedido']).reverse().map(fila => {
                     return {
-                        id: fila['# Pedido'] || fila['Pedido'] || 'S/N',
+                        id: fila['# Pedido'],
                         cliente: fila['Nombre completo'] || 'Sin nombre',
-                        articulo: (fila['Referencia'] || '') + ' (' + (fila['Talla'] || '') + ')',
-                        estadoConf: fila['Estado'] || 'Normal',
-                        estadoEnvio: fila['Enviado'] || 'No Enviado',
+                        telefono: fila['Telefono'] || 'Sin teléfono',
+                        correo: fila['Correo'] || 'Sin correo',
+                        direccion: fila['Dirección'] || 'Sin dirección',
+                        ciudad: fila['Ciudad'] || 'Sin ciudad',
+                        articulo: fila['Referencia'] || 'Producto',
+                        talla: fila['Talla'] || 'N/A',
+                        cantidad: fila['Cantidad'] || '1',
+                        estado: fila['Estado'] || 'Ingresado',
+                        // Buscamos cualquier campo que tenga formato de Drive por seguridad
+                        linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
                         guia: fila['Guia'] ? fila['Guia'] : null
                     };
                 });
                 
-                // Dibujamos la tabla
                 renderTable();
             } catch (error) {
-                // Si da error 403 o de red, mostramos instrucciones claras
-                tableBody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="text-center py-8">
-                        <div class="text-red-500 font-medium mb-2"><i class="fa-solid fa-circle-xmark"></i> Falló la conexión con el Excel</div>
-                        <p class="text-slate-600 font-mono text-xs mb-2 p-2 bg-slate-100 rounded inline-block">Detalle: ${error.message}</p>
-                        <p class="text-slate-500 text-xs">Abre tu link de Google Web App directamente en una pestaña nueva del navegador para ver si el Excel está devolviendo los datos correctamente.</p>
-                    </td>
-                </tr>`;
-                console.error(error);
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Error al conectar con Google Sheets. Verifica la URL. <br><span class="text-xs text-slate-400">${error.message}</span></td></tr>`;
+                console.error("Error trayendo pedidos:", error);
             }
         }
 
-        /**
-         * STREAMING_CHUNK:Lógica de simulación de automatizaciones (Coordinadora & WhatsApp)...
-         */
+        // Utilidades del Modal Personalizado
+        function showModal(title, message, type) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            const iconContainer = document.getElementById('modal-icon-container');
+            const icon = document.getElementById('modal-icon');
+            
+            if(type === 'success') {
+                iconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-emerald-100 text-emerald-600';
+                icon.className = 'fa-solid fa-check text-xl';
+            } else {
+                iconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-indigo-100 text-indigo-600';
+                icon.className = 'fa-solid fa-circle-info text-xl';
+            }
+            modal.classList.remove('hidden');
+        }
+        function closeModal() { modal.classList.add('hidden'); }
 
-        // Simular conexión a API de Coordinadora (Reemplaza el trabajo manual)
-        function simulateGenerateGuia(orderId, index) {
+        // Inicializador automático
+        window.onload = cargarPedidosDesdeGoogle;
+
+    </script>
+</body>
+</html>";
+        
+        // 2. Número de tu mensajero/domiciliario local (Con código de país, ej: 573001234567)
+        const NUMERO_DOMICILIARIO = "573054813630"; 
+
+        // =====================================================================
+
+        let dbOrders = [];
+        const tableBody = document.getElementById('orders-table-body');
+        const kpiPendientes = document.getElementById('kpi-pendientes');
+        const modal = document.getElementById('custom-modal');
+
+        // Construir la tabla con los datos
+        function renderTable() {
+            tableBody.innerHTML = '';
+            let pendientes = 0;
+
+            if (dbOrders.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">No se encontraron pedidos recientes.</td></tr>`;
+                kpiPendientes.textContent = "0";
+                return;
+            }
+
+            dbOrders.forEach((order, index) => {
+                if(!order.guia) pendientes++;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors";
+                
+                // Formato de Estado
+                let estadoClass = "bg-slate-100 text-slate-700";
+                if(order.estado.toLowerCase().includes("empacado")) estadoClass = "bg-blue-100 text-blue-700";
+                if(order.estado.toLowerCase().includes("normal")) estadoClass = "bg-amber-100 text-amber-700";
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-bold text-indigo-600">#${order.id}</td>
+                    
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-slate-800">${order.cliente}</div>
+                        <div class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-phone mr-1"></i> ${order.telefono}</div>
+                        <div class="text-xs text-slate-500 truncate max-w-[180px]" title="${order.correo}">
+                            <i class="fa-solid fa-envelope mr-1"></i> ${order.correo}
+                        </div>
+                    </td>
+                    
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-slate-800">${order.ciudad}</div>
+                        <div class="text-xs text-slate-500 mt-1 truncate max-w-[180px]" title="${order.direccion}">
+                            <i class="fa-solid fa-location-dot mr-1"></i> ${order.direccion}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <div class="text-slate-800 font-medium truncate max-w-[150px]" title="${order.articulo}">${order.articulo}</div>
+                        <div class="text-xs text-slate-500 mt-1">
+                            Talla: <span class="font-bold text-slate-700">${order.talla}</span> | Cant: ${order.cantidad}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <div class="mb-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${estadoClass}">
+                                ${order.estado}
+                            </span>
+                        </div>
+                        <div>
+                            ${order.linkPago && order.linkPago.includes('http') ? 
+                              `<a href="${order.linkPago}" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1 text-xs font-medium bg-indigo-50 px-2 py-1 rounded inline-flex"><i class="fa-solid fa-file-invoice-dollar"></i> Ver Soporte</a>` 
+                              : `<span class="text-slate-400 text-xs italic px-2 py-1 border border-dashed rounded">Sin soporte</span>`}
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex justify-center gap-2" id="celda-acciones-${order.id}">
+                            ${!order.guia ? `
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'nacional')" class="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-xs font-medium transition-colors border border-indigo-200" title="Generar Guía">
+                                    <i class="fa-solid fa-truck"></i> Guía Nac.
+                                </button>
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'local')" class="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-xs font-medium transition-colors border border-green-200" title="Enviar info al Mensajero">
+                                    <i class="fa-brands fa-whatsapp"></i> Moto Domi
+                                </button>
+                            ` : `
+                                <span class="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-medium flex items-center gap-2 border border-slate-200">
+                                    <i class="fa-solid fa-check-circle text-emerald-500"></i> Despachado
+                                </span>
+                            `}
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            kpiPendientes.textContent = pendientes;
+        }
+
+        // Lógica de botones de envío (WhatsApp y Guías)
+        function gestionarEnvio(orderId, index, tipoEnvio) {
             const btnContainer = document.getElementById(`celda-acciones-${orderId}`);
-            const originalHTML = btnContainer.innerHTML;
+            const order = dbOrders[index];
             
-            // UI de Carga
-            btnContainer.innerHTML = `
-                <div class="flex items-center gap-2 px-3 py-1.5 text-indigo-600 text-xs font-medium">
-                    <div class="loader"></div> Conectando...
-                </div>
-            `;
+            // Animación de carga visual
+            btnContainer.innerHTML = `<div class="flex items-center gap-2 px-3 py-1.5 text-slate-600 text-xs font-medium"><div class="loader" style="width:14px;height:14px;border-width:2px;"></div> Procesando...</div>`;
 
-            // Simular tiempo de respuesta de red (1.5 segundos)
             setTimeout(() => {
-                // Generar número de rastreo falso (CM + Random)
-                const mockTracking = "CM" + Math.floor(100000000 + Math.random() * 900000000);
+                if(tipoEnvio === 'local') {
+                    // 1. LÓGICA DOMICILIARIO (Abriendo WHATSAPP WEB)
+                    const msgDomi = `🛵 *NUEVO DOMICILIO*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Dirección:* ${order.direccion}, ${order.ciudad}\n*Pedido:* #${order.id} - ${order.articulo} (Talla: ${order.talla} / Cantidad: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger a la tienda.`;
+                    
+                    // Abrimos ventana de WhatsApp
+                    window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
+                    
+                    showModal('¡WhatsApp Abierto!', `Se abrió una pestaña con los datos listos para enviar a tu domiciliario.\n\nEl sistema internamente lo marcará como: MOTO-${orderId}`, 'success');
+                    
+                    dbOrders[index].guia = "MOTO-" + orderId;
+                } else {
+                    // 2. LÓGICA NACIONAL (Simulador API Transportadora)
+                    const mockTracking = "PT" + Math.floor(100000000 + Math.random() * 900000000);
+                    showModal('¡Guía Creada!', `Se ha generado la guía con éxito.\n\nTracking Nacional: ${mockTracking}\n\nPuedes proceder a imprimir la etiqueta térmica.`, 'success');
+                    
+                    dbOrders[index].guia = mockTracking;
+                }
                 
-                // Actualizar Base de Datos local
-                dbOrders[index].guia = mockTracking;
-                
-                // Mostrar éxito
-                showModal('¡Guía Generada!', `Se ha generado la guía exitosamente con Coordinadora para el pedido #${orderId}.\n\nTracking: ${mockTracking}`, 'success');
-                
-                // Re-renderizar tabla para mostrar los nuevos botones
                 renderTable();
-            }, 1500);
+            }, 600);
         }
 
-        // Simular envío de WhatsApp (Conexión CRM)
-        function notifyWhatsApp(orderId, cliente, guia) {
-            const msg = `Hola ${cliente} 👋. \n\n¡Excelentes noticias! Tu pedido #${orderId} de Paralelo Trendy ya ha sido despachado. \n\nPuedes rastrearlo en Coordinadora con la guía: ${guia}.\n\n¡Gracias por tu compra!`;
+        // Fetch de datos hacia el Google Apps Script
+        async function cargarPedidosDesdeGoogle() {
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-10 text-indigo-600"><div class="loader inline-block mr-2 border-indigo-600"></div> Sincronizando con la base de datos de Paralelo...</td></tr>`;
             
-            showModal('Notificación WhatsApp Enviada', `Se simuló el envío del siguiente mensaje automático:\n\n"${msg}"`, 'success');
+            if(GOOGLE_WEB_APP_URL.includes("PEGAR_AQUI")) {
+                 tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-amber-600 font-medium"><i class="fa-solid fa-triangle-exclamation"></i> Error: No has pegado la URL de tu Google Script en el archivo HTML.</td></tr>`;
+                 return;
+            }
+
+            try {
+                const respuesta = await fetch(GOOGLE_WEB_APP_URL, { redirect: "follow" });
+                if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
+
+                const datosExcel = await respuesta.json();
+                
+                // Mapeo Inteligente a la estructura del nuevo Excel
+                dbOrders = datosExcel.filter(fila => fila['# Pedido']).reverse().map(fila => {
+                    return {
+                        id: fila['# Pedido'],
+                        cliente: fila['Nombre completo'] || 'Sin nombre',
+                        telefono: fila['Telefono'] || 'Sin teléfono',
+                        correo: fila['Correo'] || 'Sin correo',
+                        direccion: fila['Dirección'] || 'Sin dirección',
+                        ciudad: fila['Ciudad'] || 'Sin ciudad',
+                        articulo: fila['Referencia'] || 'Producto',
+                        talla: fila['Talla'] || 'N/A',
+                        cantidad: fila['Cantidad'] || '1',
+                        estado: fila['Estado'] || 'Ingresado',
+                        // Buscamos cualquier campo que tenga formato de Drive por seguridad
+                        linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
+                        guia: fila['Guia'] ? fila['Guia'] : null
+                    };
+                });
+                
+                renderTable();
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Error al conectar con Google Sheets. Verifica la URL. <br><span class="text-xs text-slate-400">${error.message}</span></td></tr>`;
+                console.error("Error trayendo pedidos:", error);
+            }
         }
 
-        // Inicializar la vista
-        window.onload = () => {
-            // En vez de cargar datos falsos, ahora llamamos a Google
-            cargarPedidosDesdeGoogle();
-        };
+        // Utilidades del Modal Personalizado
+        function showModal(title, message, type) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            
+            const iconContainer = document.getElementById('modal-icon-container');
+            const icon = document.getElementById('modal-icon');
+            
+            if(type === 'success') {
+                iconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-emerald-100 text-emerald-600';
+                icon.className = 'fa-solid fa-check text-xl';
+            } else {
+                iconContainer.className = 'w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-indigo-100 text-indigo-600';
+                icon.className = 'fa-solid fa-circle-info text-xl';
+            }
+            modal.classList.remove('hidden');
+        }
+        function closeModal() { modal.classList.add('hidden'); }
+
+        // Inicializador automático
+        window.onload = cargarPedidosDesdeGoogle;
 
     </script>
 </body>
