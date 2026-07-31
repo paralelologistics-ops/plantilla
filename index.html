@@ -62,13 +62,12 @@
         th { background-color: #f8fafc; font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; }
         tbody tr:hover { background-color: #f8fafc; }
 
-        /* Estilos específicos de celdas */
         .td-id { font-weight: 700; color: var(--primary); }
         .td-contact i { color: #94a3b8; width: 16px; text-align: center; margin-right: 4px; }
         .td-contact div { margin-bottom: 4px; white-space: nowrap; }
         .td-contact div:last-child { margin-bottom: 0; }
-        .td-location { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .td-ref { font-weight: 500; color: #0f172a; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .td-location { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .td-ref { font-weight: 500; color: #0f172a; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .td-cant { font-weight: 700; color: #334155; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;}
         .text-center { text-align: center; }
 
@@ -90,7 +89,6 @@
         .btn-notify:hover { background-color: #059669; }
 
         .loader-container { padding: 40px; text-align: center; color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
-        .loader { border: 3px solid #e2e8f0; border-radius: 50%; border-top: 3px solid var(--primary); width: 32px; height: 32px; animation: spin 1s linear infinite; }
         .error-container { padding: 40px; text-align: center; color: #ef4444; font-weight: 500; }
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 50; }
@@ -194,7 +192,8 @@
     </div>
 
     <script>
-        // ⚠️ TUS VARIABLES EXACTAS QUE YA FUNCIONABAN
+        
+        // ⚠️ TUS VARIABLES EXACTAS:
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
         const NUMERO_DOMICILIARIO = "573054813630"; 
 
@@ -218,7 +217,7 @@
 
                 const tr = document.createElement('tr');
                 
-                // Formatear estado
+                // Evaluar el estado logístico
                 let estadoClass = "status-ingresado";
                 let estadoText = "Ingresado";
                 if(order.guia) {
@@ -226,13 +225,14 @@
                     estadoText = "Despachado";
                 }
 
+                // Generar 12 columnas exactas
                 tr.innerHTML = `
                     <td class="td-id">#${order.id}</td>
                     <td style="font-weight: 500;">${order.cliente}</td>
                     <td class="td-contact"><i class="fa-solid fa-phone"></i> ${order.telefono}</td>
                     <td class="td-contact"><i class="fa-solid fa-envelope"></i> ${order.correo}</td>
-                    <td class="td-location">${order.ciudad}</td>
-                    <td class="td-location"><i class="fa-solid fa-location-dot" style="color:#94a3b8; margin-right:4px;"></i> ${order.direccion}</td>
+                    <td class="td-location" title="${order.ciudad}">${order.ciudad}</td>
+                    <td class="td-location" title="${order.direccion}"><i class="fa-solid fa-location-dot" style="color:#94a3b8; margin-right:4px;"></i> ${order.direccion}</td>
                     <td class="td-ref" title="${order.referencia}">${order.referencia}</td>
                     <td class="text-center"><span style="font-weight:600; color:#475569;">${order.talla}</span></td>
                     <td class="text-center"><span class="td-cant">${order.cantidad}</span></td>
@@ -278,6 +278,7 @@
 
             setTimeout(() => {
                 if(tipoEnvio === 'local') {
+                    // Lógica para enviar a Moto (WhatsApp al Domiciliario)
                     const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Ciudad:* ${order.ciudad}\n*Dirección:* ${order.direccion}\n*Pedido:* #${order.id}\n*Artículo:* ${order.referencia} (Talla: ${order.talla} | Cant: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger.`;
                     
                     window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
@@ -285,12 +286,13 @@
                     
                     dbOrders[index].guia = "MOTO-" + orderId;
                 } else {
+                    // Lógica para Guía Nacional Simulada
                     const mockTracking = "BO" + Math.floor(100000000 + Math.random() * 900000000);
                     showModal('¡Guía Creada Exitosamente!', `Se ha simulado la creación de guía nacional.\n\nNúmero de Guía: ${mockTracking}\n\nEl sistema ahora habilitará el botón para que le notifiques al cliente.`, 'info');
                     dbOrders[index].guia = mockTracking;
                 }
                 
-                renderTable(); // Esto hace que aparezca el botón verde de "Notificar Cliente"
+                renderTable(); 
             }, 800);
         }
 
@@ -304,15 +306,15 @@
                 mensaje += `🚚 Tu pedido fue enviado por transportadora nacional.\n*Número de Guía:* ${order.guia}\n\nPuedes rastrearlo en la página de la transportadora.`;
             }
             
-            // Limpiamos el teléfono por si tiene espacios o guiones
+            // Extraer solo números del celular
             let telefono = order.telefono.toString().replace(/\D/g, '');
-            // Si el número tiene 10 dígitos (típico celular Colombia), le agregamos el +57
+            // Formatear para Colombia si tiene 10 dígitos
             if (telefono.length === 10) {
                 telefono = '57' + telefono;
             }
 
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
-            showModal('¡Avisando al cliente!', `Se ha abierto WhatsApp para enviarle el número de guía / estado al cliente ${order.cliente}.`, 'success');
+            showModal('¡Avisando al cliente!', `Se ha abierto WhatsApp para enviarle el número de guía o estado al cliente ${order.cliente}.`, 'success');
         }
 
         async function cargarPedidosDesdeGoogle() {
@@ -324,7 +326,7 @@
 
                 const datosExcel = await respuesta.json();
                 
-                // Mapeo adaptado a las 12 columnas exactas
+                // Mapear los datos exactos que vienen de Sheets a las 12 columnas
                 dbOrders = datosExcel.filter(fila => fila['# Pedido']).reverse().map((fila, i) => {
                     return {
                         id: fila['# Pedido'] || (i+1),
@@ -349,7 +351,6 @@
             }
         }
 
-        // Utilidades del Modal
         function showModal(title, message, type) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -367,7 +368,7 @@
         
         function closeModal() { modalOverlay.classList.remove('active'); }
 
-        // Iniciar
+        // Iniciar carga automáticamente
         window.onload = cargarPedidosDesdeGoogle;
     </script>
 </body>
