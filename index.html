@@ -14,140 +14,38 @@
             --bg-card: #ffffff;
             --primary: #0d9488;
             --primary-hover: #0f766e;
-            --primary-light: #ccfbf1;
             --text-main: #334155;
             --text-muted: #64748b;
             --text-light: #f8fafc;
             --border-color: #e2e8f0;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+        body { background-color: var(--bg-body); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
-        /* Sidebar */
-        aside {
-            width: 260px;
-            background-color: var(--bg-sidebar);
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-        }
-
-        .logo-container {
-            height: 70px;
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            gap: 12px;
-        }
-
-        .logo-icon {
-            background: var(--primary);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-        }
-
+        aside { width: 260px; background-color: var(--bg-sidebar); color: var(--text-light); display: flex; flex-direction: column; flex-shrink: 0; }
+        .logo-container { height: 70px; display: flex; align-items: center; padding: 0 24px; border-bottom: 1px solid rgba(255,255,255,0.1); gap: 12px; }
+        .logo-icon { background: var(--primary); color: white; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
         .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-        
         .nav-menu { padding: 24px 16px; flex-grow: 1; }
         .nav-title { font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; padding-left: 8px; }
-        
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            color: #cbd5e1;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s;
-            margin-bottom: 4px;
-        }
-
+        .nav-link { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #cbd5e1; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s; margin-bottom: 4px; }
         .nav-link.active { background-color: rgba(13, 148, 136, 0.15); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.2); }
-        .nav-link:hover:not(.active) { background-color: rgba(255,255,255,0.05); color: white; }
-
-        .user-profile {
-            padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .user-profile { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
         .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #334155; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;}
         .user-info h4 { font-size: 14px; margin: 0; color: white;}
         .user-info p { font-size: 12px; color: #94a3b8; margin: 0;}
 
-        /* Main Content */
         main { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
-
-        header {
-            height: 70px;
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            flex-shrink: 0;
-        }
-
+        header { height: 70px; background-color: var(--bg-card); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 32px; flex-shrink: 0; }
         header h1 { font-size: 20px; font-weight: 600; color: #0f172a; }
-
-        .btn-sync {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-main);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
+        .btn-sync { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--text-main); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-sync:hover { background-color: #f8fafc; border-color: #cbd5e1; }
-
         .content-area { padding: 32px; overflow-y: auto; flex-grow: 1; }
-
-        /* KPI Cards */
+        
         .kpi-grid { display: flex; gap: 24px; margin-bottom: 32px; }
-        .kpi-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
+        .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; flex: 1; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .kpi-info h3 { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
         .kpi-info p { font-size: 32px; font-weight: 700; color: #0f172a; line-height: 1; }
         .kpi-icon { width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
@@ -155,26 +53,13 @@
         .icon-green { background-color: #dcfce7; color: #16a34a; }
         .status-dot { display: inline-block; width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; margin-right: 8px; box-shadow: 0 0 0 3px #dcfce7; }
 
-        .table-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
+        .table-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; }
         .table-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
         .table-header h2 { font-size: 16px; font-weight: 600; color: #0f172a; }
-
         .table-container { width: 100%; overflow-x: auto; }
-        
         table { width: 100%; border-collapse: collapse; min-width: 1400px; }
         th, td { padding: 16px 24px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border-color); }
         th { background-color: #f8fafc; font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; }
-        
-        tbody tr { transition: background-color 0.2s; }
         tbody tr:hover { background-color: #f8fafc; }
 
         /* Estilos específicos de celdas */
@@ -182,64 +67,30 @@
         .td-contact i { color: #94a3b8; width: 16px; text-align: center; margin-right: 4px; }
         .td-contact div { margin-bottom: 4px; white-space: nowrap; }
         .td-contact div:last-child { margin-bottom: 0; }
-        
         .td-location { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .td-ref { font-weight: 500; color: #0f172a; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .td-cant { font-weight: 700; color: #334155; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;}
-        
         .text-center { text-align: center; }
 
-        /* Badges & Links */
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
         .status-ingresado { background-color: #f1f5f9; color: #475569; }
         .status-despachado { background-color: #dcfce7; color: #15803d; }
 
-        .link-soporte {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #2563eb;
-            font-weight: 500;
-            text-decoration: none;
-            background: #eff6ff;
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
+        .link-soporte { display: inline-flex; align-items: center; gap: 6px; color: #2563eb; font-weight: 500; text-decoration: none; background: #eff6ff; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
         .link-soporte:hover { background: #dbeafe; color: #1d4ed8; }
         .no-soporte { color: #94a3b8; font-style: italic; font-size: 12px; white-space: nowrap;}
 
-        /* Botones Acción */
         .action-container { display: flex; gap: 8px; justify-content: center; }
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
+        .btn-action { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
         .btn-guia { background-color: #f8fafc; border-color: #cbd5e1; color: #334155; }
         .btn-guia:hover { background-color: #f1f5f9; border-color: #94a3b8; }
         .btn-moto { background-color: #ecfdf5; border-color: #a7f3d0; color: #059669; }
         .btn-moto:hover { background-color: #d1fae5; border-color: #6ee7b7; }
+        .btn-notify { background-color: #10b981; border-color: #059669; color: white; }
+        .btn-notify:hover { background-color: #059669; }
 
         .loader-container { padding: 40px; text-align: center; color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
         .loader { border: 3px solid #e2e8f0; border-radius: 50%; border-top: 3px solid var(--primary); width: 32px; height: 32px; animation: spin 1s linear infinite; }
-        
         .error-container { padding: 40px; text-align: center; color: #ef4444; font-weight: 500; }
 
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 50; }
@@ -252,12 +103,10 @@
         .modal-text { font-size: 14px; color: #475569; margin-bottom: 24px; line-height: 1.5; white-space: pre-line;}
         .modal-btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; transition: background 0.2s;}
         .modal-btn:hover { background: var(--primary-hover); }
-
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
     <aside>
         <div class="logo-container">
             <div class="logo-icon"><i class="fa-solid fa-power-off"></i></div>
@@ -277,7 +126,6 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main>
         <header>
             <h1>Centro de Despachos</h1>
@@ -287,7 +135,6 @@
         </header>
 
         <div class="content-area">
-            
             <div class="kpi-grid">
                 <div class="kpi-card">
                     <div class="kpi-info">
@@ -307,7 +154,7 @@
 
             <div class="table-section">
                 <div class="table-header">
-                    <i class="fa-solid fa-list-check text-primary"></i>
+                    <i class="fa-solid fa-list-check" style="color: var(--primary);"></i>
                     <h2>Registro de Ventas y Envíos</h2>
                 </div>
                 <div class="table-container">
@@ -334,11 +181,9 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Modal Base -->
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-content">
             <div id="modal-icon" class="modal-icon success"><i class="fa-solid fa-check"></i></div>
@@ -349,17 +194,13 @@
     </div>
 
     <script>
-        
-        // ⚠️ PEGAR AQUÍ TU URL DE GOOGLE APPS SCRIPT (Que termine en ?action=getPedidos)
+        // ⚠️ TUS VARIABLES EXACTAS QUE YA FUNCIONABAN
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
-        
-        // ⚠️ PEGAR AQUÍ EL NÚMERO DE TU DOMICILIARIO (Código país + número)
         const NUMERO_DOMICILIARIO = "573054813630"; 
 
         let dbOrders = [];
         const tableBody = document.getElementById('orders-table-body');
         const kpiPendientes = document.getElementById('kpi-pendientes');
-        const modal = document.getElementById('custom-modal');
         const modalOverlay = document.querySelector('.modal-overlay');
 
         function renderTable() {
@@ -416,9 +257,9 @@
                                     <i class="fa-brands fa-whatsapp"></i> Moto Domi
                                 </button>
                             ` : `
-                                <span style="color: #10b981; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 4px;">
-                                    <i class="fa-solid fa-check-circle"></i> Listo
-                                </span>
+                                <button onclick="notificarCliente('${order.id}', ${index})" class="btn-action btn-notify" title="Avisar al cliente por WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i> Notificar Cliente
+                                </button>
                             `}
                         </div>
                     </td>
@@ -440,17 +281,38 @@
                     const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Ciudad:* ${order.ciudad}\n*Dirección:* ${order.direccion}\n*Pedido:* #${order.id}\n*Artículo:* ${order.referencia} (Talla: ${order.talla} | Cant: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger.`;
                     
                     window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
-                    showModal('¡WhatsApp Abierto!', `Se abrió una ventana para enviar los datos completos al Domiciliario.\n\nCódigo Interno: MOTO-${orderId}`, 'success');
+                    showModal('¡Datos enviados al Domiciliario!', `Se abrió WhatsApp para enviar los datos al Domi.\n\nEl sistema ahora habilitará el botón para que le notifiques al cliente.`, 'success');
                     
                     dbOrders[index].guia = "MOTO-" + orderId;
                 } else {
                     const mockTracking = "BO" + Math.floor(100000000 + Math.random() * 900000000);
-                    showModal('¡Guía Creada!', `Se ha simulado la creación de guía nacional.\n\nNúmero de Guía: ${mockTracking}\n\nImprime la etiqueta térmica desde el panel logístico.`, 'info');
+                    showModal('¡Guía Creada Exitosamente!', `Se ha simulado la creación de guía nacional.\n\nNúmero de Guía: ${mockTracking}\n\nEl sistema ahora habilitará el botón para que le notifiques al cliente.`, 'info');
                     dbOrders[index].guia = mockTracking;
                 }
                 
-                renderTable();
+                renderTable(); // Esto hace que aparezca el botón verde de "Notificar Cliente"
             }, 800);
+        }
+
+        function notificarCliente(orderId, index) {
+            const order = dbOrders[index];
+            let mensaje = `¡Hola ${order.cliente}! 👋\n\nTe confirmamos que tu pedido *#${order.id}* ya fue despachado. 📦\n\n`;
+            
+            if (order.guia && order.guia.startsWith('MOTO')) {
+                mensaje += `🛵 Tu pedido va en camino con nuestro domiciliario a la dirección: ${order.direccion}.\n\n¡Atento a tu celular!`;
+            } else {
+                mensaje += `🚚 Tu pedido fue enviado por transportadora nacional.\n*Número de Guía:* ${order.guia}\n\nPuedes rastrearlo en la página de la transportadora.`;
+            }
+            
+            // Limpiamos el teléfono por si tiene espacios o guiones
+            let telefono = order.telefono.toString().replace(/\D/g, '');
+            // Si el número tiene 10 dígitos (típico celular Colombia), le agregamos el +57
+            if (telefono.length === 10) {
+                telefono = '57' + telefono;
+            }
+
+            window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
+            showModal('¡Avisando al cliente!', `Se ha abierto WhatsApp para enviarle el número de guía / estado al cliente ${order.cliente}.`, 'success');
         }
 
         async function cargarPedidosDesdeGoogle() {
@@ -487,7 +349,7 @@
             }
         }
 
-        // Modales
+        // Utilidades del Modal
         function showModal(title, message, type) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
@@ -507,7 +369,6 @@
 
         // Iniciar
         window.onload = cargarPedidosDesdeGoogle;
-
     </script>
 </body>
 </html>
