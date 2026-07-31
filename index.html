@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot-On | Panel Logístico</title>
     
-    <!-- 1. Cargamos Tailwind CSS (El motor de diseño) -->
+    <!-- 1. Cargamos Tailwind CSS (El motor de diseño). ¡Asegúrate de no tener bloqueadores de anuncios activados! -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- 2. Cargamos tipografía moderna -->
+    <!-- 2. Cargamos tipografía e iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- 3. Cargamos Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Configuramos los colores de la marca Bot-On -->
     <script>
         tailwind.config = {
             theme: {
@@ -50,9 +47,7 @@
 </head>
 <body class="text-gray-800 antialiased h-screen flex overflow-hidden">
 
-    <!-- BARRA LATERAL (SIDEBAR) -->
     <aside class="w-64 bg-gray-900 text-white hidden md:flex flex-col h-full shadow-xl z-20">
-        <!-- Logo Brand -->
         <div class="h-20 flex items-center px-6 border-b border-gray-800 bg-gray-950">
             <div class="flex items-center gap-3 text-boton-500">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-boton-500 to-boton-600 flex items-center justify-center text-white shadow-lg">
@@ -62,7 +57,6 @@
             </div>
         </div>
         
-        <!-- Menú -->
         <nav class="flex-1 overflow-y-auto py-6">
             <p class="px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Gestión Principal</p>
             <ul class="space-y-2 px-4">
@@ -71,15 +65,9 @@
                         <i class="fa-solid fa-inbox w-5 text-center"></i> Pedidos Recientes
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl font-medium transition-all opacity-60">
-                        <i class="fa-solid fa-chart-pie w-5 text-center"></i> Analíticas (Próximamente)
-                    </a>
-                </li>
             </ul>
         </nav>
         
-        <!-- Usuario Bottom -->
         <div class="p-4 border-t border-gray-800">
             <div class="flex items-center gap-3 bg-gray-800/50 p-3 rounded-xl border border-gray-700/50">
                 <div class="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300">PT</div>
@@ -91,10 +79,8 @@
         </div>
     </aside>
 
-    <!-- ÁREA PRINCIPAL -->
     <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-gray-50">
         
-        <!-- Cabecera Superior -->
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 sticky top-0 shadow-sm">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Centro de Despachos</h1>
@@ -106,12 +92,9 @@
             </button>
         </header>
 
-        <!-- Contenido -->
         <div class="flex-1 overflow-auto p-8">
             
-            <!-- Tarjetas de Resumen (KPIs) -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <!-- KPI 1 -->
                 <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex justify-between items-start">
                     <div>
                         <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Pendientes de Guía</p>
@@ -124,7 +107,6 @@
                     </div>
                 </div>
                 
-                <!-- KPI 2 -->
                 <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex justify-between items-start">
                     <div>
                         <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Estado del Sistema</p>
@@ -143,7 +125,6 @@
                 </div>
             </div>
 
-            <!-- Tabla de Pedidos -->
             <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
                     <h2 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-list-check text-boton-500 mr-2"></i> Registro de Ventas</h2>
@@ -166,11 +147,9 @@
                     </table>
                 </div>
             </div>
-            
         </div>
     </main>
 
-    <!-- Modal para Notificaciones -->
     <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
         <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
         <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 p-8 border border-gray-100">
@@ -185,11 +164,8 @@
         </div>
     </div>
 
-    <!-- ================================================================= -->
-    <!-- LÓGICA JAVASCRIPT  -->
-    <!-- ================================================================= -->
     <script>
-        // ⚠️ 1. PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Asegúrate de que termine en ?action=getPedidos)
+        // ⚠️ 1. PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Que termine en ?action=getPedidos)
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
         
         // ⚠️ 2. NÚMERO DE WHATSAPP DEL DOMICILIARIO (Código de país + número, sin el +)
@@ -216,7 +192,6 @@
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-boton-50/50 transition-colors";
                 
-                // Formato de Estado
                 let estadoClass = "bg-gray-100 text-gray-700 border-gray-200";
                 let estadoText = order.estado || "Ingresado";
                 if(estadoText.toLowerCase().includes("empacado")) estadoClass = "bg-blue-50 text-blue-700 border-blue-200";
@@ -287,7 +262,6 @@
             const order = dbOrders[index];
             const displayId = order.id || `P-${index}`;
             
-            // Animación de carga visual
             btnContainer.innerHTML = `<div class="w-full py-4 flex flex-col items-center justify-center bg-white rounded-xl border border-gray-100 shadow-sm"><div class="loader mb-2"></div><span class="text-[10px] font-bold text-gray-400 uppercase">Procesando...</span></div>`;
 
             setTimeout(() => {
@@ -321,7 +295,6 @@
                 
                 dbOrders = datosExcel.filter(fila => fila['Nombre completo'] || fila['# Pedido'] || fila['Timestamp']).reverse().map((fila, i) => {
                     return {
-                        // Buscamos # Pedido o un número generado si no existe
                         id: fila['# Pedido'] || fila['Timestamp']?.substring(0,10) || `00${i+1}`,
                         cliente: fila['Nombre completo'] || 'Sin nombre',
                         telefono: fila['Telefono'] || 'N/A',
@@ -332,7 +305,6 @@
                         talla: fila['Talla'] || 'N/A',
                         cantidad: fila['Cantidad'] || '1',
                         estado: fila['Estado'] || 'Ingresado',
-                        // Busca un link de Drive en toda la fila por si está en otra columna
                         linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
                         guia: fila['Guia'] ? fila['Guia'] : null
                     };
