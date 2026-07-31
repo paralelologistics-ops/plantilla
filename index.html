@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot-On | Panel Logístico</title>
     
-    <!-- 1. Cargamos Tailwind CSS (El motor de diseño). ¡Asegúrate de no tener bloqueadores de anuncios activados! -->
+    <!-- ¡IMPORTANTE! Si tu navegador bloquea este script, la página se verá sin estilos -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 2. Cargamos tipografía e iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -93,7 +91,6 @@
         </header>
 
         <div class="flex-1 overflow-auto p-8">
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex justify-between items-start">
                     <div>
@@ -142,7 +139,7 @@
                             </tr>
                         </thead>
                         <tbody id="orders-table-body" class="divide-y divide-gray-100">
-                            <!-- Datos inyectados vía JS -->
+                            <!-- Los datos se inyectarán aquí vía JavaScript -->
                         </tbody>
                     </table>
                 </div>
@@ -165,7 +162,7 @@
     </div>
 
     <script>
-        // ⚠️ 1. PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Que termine en ?action=getPedidos)
+        // ⚠️ 1. PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Asegúrate de que termine en ?action=getPedidos)
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
         
         // ⚠️ 2. NÚMERO DE WHATSAPP DEL DOMICILIARIO (Código de país + número, sin el +)
@@ -225,7 +222,7 @@
                         </div>
                         <div>
                             ${order.linkPago && order.linkPago.includes('http') ? 
-                              `<a href="${order.linkPago}" target="_blank" class="text-xs font-bold text-boton-600 hover:text-boton-800 bg-boton-50 px-3 py-1.5 rounded-lg border border-boton-100">
+                              `<a href="${order.linkPago}" target="_blank" class="text-xs font-bold text-boton-600 hover:text-boton-800 bg-boton-50 px-3 py-1.5 rounded-lg border border-boton-100 shadow-sm transition-colors">
                                 <i class="fa-solid fa-receipt"></i> Ver Soporte
                                </a>` 
                               : `<span class="text-xs font-medium text-gray-400"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
@@ -266,7 +263,7 @@
 
             setTimeout(() => {
                 if(tipoEnvio === 'local') {
-                    const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Dirección:* ${order.direccion}, ${order.ciudad}\n*Pedido:* ${displayId} - ${order.articulo} (Talla: ${order.talla})\n\nPor favor confirmar recibido.`;
+                    const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Dirección:* ${order.direccion}, ${order.ciudad}\n*Pedido:* ${displayId} - ${order.articulo} (Talla: ${order.talla})\n*Cantidad:* ${order.cantidad}\n\nPor favor confirmar recibido.`;
                     window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
                     showModal('WhatsApp Abierto', `Mensaje pre-armado enviado a tu domiciliario.\nSe marcará como: MOTO-${displayId}`);
                     dbOrders[index].guia = "MOTO-" + displayId;
@@ -283,7 +280,7 @@
             tableBody.innerHTML = `<tr><td colspan="5" class="py-16 text-center bg-gray-50/50"><div class="loader mx-auto mb-4 border-boton-500"></div><p class="text-sm font-bold text-gray-500">Sincronizando con Excel...</p></td></tr>`;
             
             if(GOOGLE_WEB_APP_URL.includes("PEGAR_AQUI")) {
-                 tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Error: Debes pegar la URL de tu Google Script en el código HTML.</p></td></tr>`;
+                 tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Error: Debes pegar la URL de tu Google Script en el código HTML (Línea ~190).</p></td></tr>`;
                  return;
             }
 
@@ -293,6 +290,7 @@
 
                 const datosExcel = await respuesta.json();
                 
+                // Mapeo adaptado a las columnas exactas de tu Excel
                 dbOrders = datosExcel.filter(fila => fila['Nombre completo'] || fila['# Pedido'] || fila['Timestamp']).reverse().map((fila, i) => {
                     return {
                         id: fila['# Pedido'] || fila['Timestamp']?.substring(0,10) || `00${i+1}`,
@@ -305,6 +303,7 @@
                         talla: fila['Talla'] || 'N/A',
                         cantidad: fila['Cantidad'] || '1',
                         estado: fila['Estado'] || 'Ingresado',
+                        // Busca cualquier enlace de drive en la fila
                         linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
                         guia: fila['Guia'] ? fila['Guia'] : null
                     };
@@ -312,7 +311,7 @@
                 
                 renderTable();
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Fallo de Conexión: ${error.message}</p></td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Fallo de Conexión: Verifica tu URL o permisos de Google Apps Script.<br>Detalle: ${error.message}</p></td></tr>`;
                 console.error("Error:", error);
             }
         }
