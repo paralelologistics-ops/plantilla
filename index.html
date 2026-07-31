@@ -3,604 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot-On | Panel Logístico</title>
-    
-    <!-- Fuente e Íconos (Normalmente no se bloquean) -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Bot-On | Centro de Despachos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --boton-50: #f0fdfa;
-            --boton-100: #ccfbf1;
-            --boton-500: #14b8a6;
-            --boton-600: #0d9488;
-            --boton-900: #134e4a;
-            
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --gray-950: #030712;
-
-            --bg-color: #f3f4f6;
-            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --bg-body: #f4f7f6;
+            --bg-sidebar: #0f172a;
+            --bg-card: #ffffff;
+            --primary: #0d9488;
+            --primary-hover: #0f766e;
+            --primary-light: #ccfbf1;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --text-light: #f8fafc;
+            --border-color: #e2e8f0;
         }
 
-        /* Reset y Base */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: var(--font-family); 
-            background-color: var(--bg-color); 
-            color: var(--gray-800); 
-            -webkit-font-smoothing: antialiased;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
             display: flex;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
-
-        /* Utilidades */
-        .hidden { display: none !important; }
-        .text-center { text-align: center; }
-        
-        /* Layout Principal */
-        .sidebar {
-            width: 256px;
-            background-color: var(--gray-900);
-            color: white;
+        /* Sidebar */
+        aside {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            color: var(--text-light);
             display: flex;
             flex-direction: column;
-            height: 100%;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            z-index: 20;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            background-color: var(--gray-50);
-        }
-
-        /* Sidebar Elements */
-        .sidebar-header {
-            height: 80px;
-            display: flex;
-            align-items: center;
-            padding: 0 24px;
-            border-bottom: 1px solid var(--gray-800);
-            background-color: var(--gray-950);
+            flex-shrink: 0;
         }
 
         .logo-container {
+            height: 70px;
             display: flex;
             align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             gap: 12px;
-            color: var(--boton-500);
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(to bottom right, var(--boton-500), var(--boton-600));
+            background: var(--primary);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
         }
 
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            color: white;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px 0;
-        }
-
-        .nav-title {
-            padding: 0 24px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 16px;
-        }
-
-        .nav-list {
-            list-style: none;
-            padding: 0 16px;
-        }
-
-        .nav-item a {
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        
+        .nav-menu { padding: 24px 16px; flex-grow: 1; }
+        .nav-title { font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 600; letter-spacing: 1px; margin-bottom: 12px; padding-left: 8px; }
+        
+        .nav-link {
             display: flex;
             align-items: center;
             gap: 12px;
             padding: 12px 16px;
-            background-color: rgba(13, 148, 136, 0.2);
-            color: var(--boton-100);
-            border-radius: 12px;
-            font-weight: 500;
+            color: #cbd5e1;
             text-decoration: none;
-            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            margin-bottom: 4px;
         }
 
-        .sidebar-footer {
-            padding: 16px;
-            border-top: 1px solid var(--gray-800);
-        }
+        .nav-link.active { background-color: rgba(13, 148, 136, 0.15); color: #2dd4bf; border: 1px solid rgba(45, 212, 191, 0.2); }
+        .nav-link:hover:not(.active) { background-color: rgba(255,255,255,0.05); color: white; }
 
         .user-profile {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             gap: 12px;
-            background-color: rgba(31, 41, 55, 0.5);
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(55, 65, 81, 0.5);
         }
+        .avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #334155; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;}
+        .user-info h4 { font-size: 14px; margin: 0; color: white;}
+        .user-info p { font-size: 12px; color: #94a3b8; margin: 0;}
 
-        .user-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: var(--gray-700);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--gray-300);
-        }
+        /* Main Content */
+        main { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
 
-        /* Header Principal */
-        .main-header {
-            height: 80px;
-            background-color: white;
-            border-bottom: 1px solid var(--gray-200);
+        header {
+            height: 70px;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 32px;
-            z-index: 10;
-            position: sticky;
-            top: 0;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
         }
 
-        .header-title h1 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
-
-        .header-title p {
-            font-size: 14px;
-            color: var(--gray-500);
-            margin-top: 4px;
-        }
+        header h1 { font-size: 20px; font-weight: 600; color: #0f172a; }
 
         .btn-sync {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
-            background-color: white;
-            border: 2px solid var(--gray-200);
-            color: var(--gray-700);
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        
-        .btn-sync:hover {
-            border-color: var(--boton-500);
-            color: var(--boton-600);
-        }
+        .btn-sync:hover { background-color: #f8fafc; border-color: #cbd5e1; }
 
-        /* Contenido Principal */
-        .content-area {
-            flex: 1;
-            overflow-y: auto;
-            padding: 32px;
-        }
+        .content-area { padding: 32px; overflow-y: auto; flex-grow: 1; }
 
-        /* KPIs */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        @media (min-width: 768px) {
-            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
+        /* KPI Cards */
+        .kpi-grid { display: flex; gap: 24px; margin-bottom: 32px; }
         .kpi-card {
-            background-color: white;
-            border-radius: 16px;
-            border: 1px solid var(--gray-200);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            flex: 1;
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: flex-start;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
+        .kpi-info h3 { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .kpi-info p { font-size: 32px; font-weight: 700; color: #0f172a; line-height: 1; }
+        .kpi-icon { width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .icon-orange { background-color: #ffedd5; color: #ea580c; }
+        .icon-green { background-color: #dcfce7; color: #16a34a; }
+        .status-dot { display: inline-block; width: 10px; height: 10px; background-color: #22c55e; border-radius: 50%; margin-right: 8px; box-shadow: 0 0 0 3px #dcfce7; }
 
-        .kpi-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--gray-500);
-            text-transform: uppercase;
-            letter-spacing: 0.025em;
-            margin-bottom: 8px;
-        }
-
-        .kpi-value {
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--gray-900);
-        }
-
-        .kpi-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
+        .table-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .kpi-icon.orange { background-color: #ffedd5; color: #ea580c; }
-        .kpi-icon.emerald { background-color: #d1fae5; color: #059669; }
-
-        .status-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .status-text {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .status-sub {
-            font-size: 12px;
-            color: var(--gray-400);
-            margin-top: 8px;
-        }
-
-        /* Tabla */
-        .table-container {
-            background-color: white;
-            border-radius: 16px;
-            border: 1px solid var(--gray-200);
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            flex-direction: column;
             overflow: hidden;
         }
 
-        .table-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--gray-200);
-            background-color: var(--gray-50);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .table-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
+        .table-header h2 { font-size: 16px; font-weight: 600; color: #0f172a; }
 
-        .table-header h2 {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--gray-800);
-        }
+        .table-container { width: 100%; overflow-x: auto; }
         
-        .table-wrapper {
-            overflow-x: auto;
-        }
+        table { width: 100%; border-collapse: collapse; min-width: 1400px; }
+        th, td { padding: 16px 24px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #f8fafc; font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; }
+        
+        tbody tr { transition: background-color 0.2s; }
+        tbody tr:hover { background-color: #f8fafc; }
 
-        table {
-            width: 100%;
-            text-align: left;
-            border-collapse: collapse;
+        /* Estilos específicos de celdas */
+        .td-id { font-weight: 700; color: var(--primary); }
+        .td-contact i { color: #94a3b8; width: 16px; text-align: center; margin-right: 4px; }
+        .td-contact div { margin-bottom: 4px; white-space: nowrap; }
+        .td-contact div:last-child { margin-bottom: 0; }
+        
+        .td-location { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .td-ref { font-weight: 500; color: #0f172a; max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .td-cant { font-weight: 700; color: #334155; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;}
+        
+        .text-center { text-align: center; }
+
+        /* Badges & Links */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
             white-space: nowrap;
         }
-
-        th {
-            background-color: white;
-            color: var(--gray-500);
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        td {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--gray-100);
-            vertical-align: middle;
-        }
-
-        tbody tr:hover {
-            background-color: rgba(240, 253, 250, 0.5); /* var(--boton-50) */
-        }
-
-        /* Tipografías dentro de la tabla */
-        .td-id { font-size: 12px; font-weight: 700; color: var(--gray-500); }
-        .td-product { font-size: 14px; font-weight: 700; color: var(--boton-600); max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
-        .td-talla { font-size: 13px; font-weight: 600; color: var(--gray-800); }
-        .td-cant { font-size: 13px; font-weight: 500; color: var(--gray-700); text-align: center; }
-        .td-badge { color: var(--gray-800); font-weight: 700; border: 1px solid var(--gray-200); border-radius: 4px; padding: 2px 4px; display: inline-block;}
-        
-        .td-client { font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
-        .td-contact { font-size: 12px; color: var(--gray-500); margin-bottom: 2px; }
-        .td-contact i { width: 16px; text-align: center; }
-
-        .td-city { font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
-        .td-address { font-size: 12px; color: var(--gray-600); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: normal; }
-
-        /* Estados */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            border: 1px solid;
-            margin-bottom: 8px;
-        }
-
-        .status-ingresado { background-color: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200); }
-        .status-empacado { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-        .status-normal { background-color: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+        .status-ingresado { background-color: #f1f5f9; color: #475569; }
+        .status-despachado { background-color: #dcfce7; color: #15803d; }
 
         .link-soporte {
-            font-size: 12px; font-weight: 700; color: var(--boton-600);
-            background-color: var(--boton-50); padding: 6px 12px;
-            border-radius: 8px; border: 1px solid var(--boton-100);
-            text-decoration: none; display: inline-block;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #2563eb;
+            font-weight: 500;
+            text-decoration: none;
+            background: #eff6ff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
-        
-        .link-soporte:hover { color: var(--boton-900); }
-        .no-soporte { font-size: 12px; font-weight: 500; color: var(--gray-400); }
+        .link-soporte:hover { background: #dbeafe; color: #1d4ed8; }
+        .no-soporte { color: #94a3b8; font-style: italic; font-size: 12px; white-space: nowrap;}
 
         /* Botones Acción */
-        .action-cell { background-color: rgba(249, 250, 251, 0.5); vertical-align: middle; }
-        .action-container { display: flex; flex-direction: column; gap: 8px; width: 128px; margin: 0 auto; }
-        
+        .action-container { display: flex; gap: 8px; justify-content: center; }
         .btn-action {
-            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: all 0.2s; border: none; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
         }
-        
-        .btn-nac { background-color: var(--gray-900); color: white; }
-        .btn-nac:hover { background-color: black; }
-        
-        .btn-local { background-color: #d1fae5; color: #065f46; }
-        .btn-local:hover { background-color: #a7f3d0; }
+        .btn-guia { background-color: #f8fafc; border-color: #cbd5e1; color: #334155; }
+        .btn-guia:hover { background-color: #f1f5f9; border-color: #94a3b8; }
+        .btn-moto { background-color: #ecfdf5; border-color: #a7f3d0; color: #059669; }
+        .btn-moto:hover { background-color: #d1fae5; border-color: #6ee7b7; }
 
-        .despachado-badge {
-            width: 100%; padding: 8px 12px; background-color: white; border: 2px solid #d1fae5;
-            border-radius: 12px; text-align: center; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-        .despachado-title { font-size: 10px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; display: block; }
-        .despachado-id { font-size: 12px; font-weight: 700; color: var(--gray-800); display: block; }
+        .loader-container { padding: 40px; text-align: center; color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+        .loader { border: 3px solid #e2e8f0; border-radius: 50%; border-top: 3px solid var(--primary); width: 32px; height: 32px; animation: spin 1s linear infinite; }
+        
+        .error-container { padding: 40px; text-align: center; color: #ef4444; font-weight: 500; }
 
-        /* Loader */
-        .loader-container { padding: 48px 0; text-align: center; background-color: rgba(249, 250, 251, 0.5); }
-        .loader { border: 3px solid var(--gray-200); border-radius: 50%; border-top: 3px solid var(--boton-500); width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto 16px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        .error-container { padding: 48px 0; text-align: center; background-color: #fef2f2; color: #dc2626; font-size: 14px; font-weight: 700; }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
-        }
-        .modal-backdrop { position: absolute; inset: 0; background-color: rgba(17, 24, 39, 0.4); backdrop-filter: blur(4px); }
-        .modal-content {
-            position: relative; background-color: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            width: 100%; max-width: 384px; margin: 0 16px; padding: 32px; border: 1px solid var(--gray-100);
-        }
-        
-        .modal-icon-container {
-            width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 24px auto; background-color: #d1fae5; color: #059669; font-size: 24px;
-        }
-        
-        .modal-title { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 12px; text-align: center; }
-        .modal-message { color: var(--gray-600); margin-bottom: 32px; text-align: center; font-size: 14px; line-height: 1.6; white-space: pre-line; }
-        
-        .btn-modal {
-            width: 100%; padding: 12px 16px; background-color: var(--gray-900); color: white; border: none;
-            border-radius: 12px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        .btn-modal:hover { background-color: var(--gray-800); }
-        
-        /* Ping Animation */
-        .ping-container { position: relative; display: flex; height: 16px; width: 16px; }
-        .ping-anim { position: absolute; display: inline-flex; height: 100%; width: 100%; border-radius: 50%; background-color: #34d399; opacity: 0.75; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
-        .ping-dot { position: relative; display: inline-flex; border-radius: 50%; height: 16px; width: 16px; background-color: #10b981; }
-        @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 50; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; width: 100%; max-width: 400px; border-radius: 16px; padding: 32px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+        .modal-icon { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; }
+        .modal-icon.success { background: #dcfce7; color: #16a34a; }
+        .modal-icon.info { background: #e0f2fe; color: #0284c7; }
+        .modal-title { font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+        .modal-text { font-size: 14px; color: #475569; margin-bottom: 24px; line-height: 1.5; white-space: pre-line;}
+        .modal-btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; width: 100%; transition: background 0.2s;}
+        .modal-btn:hover { background: var(--primary-hover); }
 
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <i class="fa-solid fa-power-off"></i>
-                </div>
-                <span class="logo-text">Bot-On<span style="color: var(--boton-500);">.</span></span>
-            </div>
+    <!-- Sidebar -->
+    <aside>
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-power-off"></i></div>
+            <div class="logo-text">Bot-On.</div>
         </div>
-        
-        <nav class="sidebar-nav">
-            <p class="nav-title">Gestión Principal</p>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="#">
-                        <i class="fa-solid fa-inbox text-center" style="width: 20px;"></i> Pedidos Recientes
-                    </a>
-                </li>
-            </ul>
+        <nav class="nav-menu">
+            <div class="nav-title">Gestión Principal</div>
+            <a href="#" class="nav-link active"><i class="fa-solid fa-box-open w-5"></i> Pedidos y Logística</a>
+            <a href="#" class="nav-link"><i class="fa-solid fa-chart-pie w-5"></i> Analíticas (Próximamente)</a>
         </nav>
-        
-        <div class="sidebar-footer">
-            <div class="user-profile">
-                <div class="user-avatar">PT</div>
-                <div>
-                    <p style="font-size: 14px; font-weight: 500; color: white;">Paralelo Trendy</p>
-                    <p style="font-size: 12px; color: var(--gray-400);">Administrador</p>
-                </div>
+        <div class="user-profile">
+            <div class="avatar">PT</div>
+            <div class="user-info">
+                <h4>Paralelo Trendy</h4>
+                <p>Administrador</p>
             </div>
         </div>
     </aside>
 
-    <main class="main-content">
-        
-        <header class="main-header">
-            <div class="header-title">
-                <h1>Centro de Despachos</h1>
-                <p>Control logístico y generación de guías.</p>
-            </div>
-            
-            <button onclick="cargarPedidosDesdeGoogle()" class="btn-sync">
-                <i class="fa-solid fa-rotate-right"></i> Sincronizar Datos
+    <!-- Main Content -->
+    <main>
+        <header>
+            <h1>Centro de Despachos</h1>
+            <button class="btn-sync" onclick="cargarPedidosDesdeGoogle()">
+                <i class="fa-solid fa-arrows-rotate"></i> Sincronizar Datos
             </button>
         </header>
 
         <div class="content-area">
+            
             <div class="kpi-grid">
                 <div class="kpi-card">
-                    <div>
-                        <p class="kpi-title">Pendientes de Guía</p>
-                        <h3 class="kpi-value" id="kpi-pendientes">--</h3>
+                    <div class="kpi-info">
+                        <h3>Pendientes de Guía / Envío</h3>
+                        <p id="kpi-pendientes">--</p>
                     </div>
-                    <div class="kpi-icon orange">
-                        <i class="fa-solid fa-box-open"></i>
-                    </div>
+                    <div class="kpi-icon icon-orange"><i class="fa-solid fa-box"></i></div>
                 </div>
-                
                 <div class="kpi-card">
-                    <div>
-                        <p class="kpi-title">Estado del Sistema</p>
-                        <div class="status-container">
-                            <span class="ping-container">
-                              <span class="ping-anim"></span>
-                              <span class="ping-dot"></span>
-                            </span>
-                            <span class="status-text">Conexión Estable</span>
-                        </div>
-                        <p class="status-sub">Bot-On funcionando en línea</p>
+                    <div class="kpi-info">
+                        <h3>Estado del Sistema</h3>
+                        <p style="font-size: 18px; margin-top: 8px; display:flex; align-items:center;"><span class="status-dot"></span> Conexión Estable</p>
                     </div>
-                    <div class="kpi-icon emerald">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
+                    <div class="kpi-icon icon-green"><i class="fa-brands fa-whatsapp"></i></div>
                 </div>
             </div>
 
-            <div class="table-container">
+            <div class="table-section">
                 <div class="table-header">
-                    <h2><i class="fa-solid fa-list-check" style="color: var(--boton-500); margin-right: 8px;"></i> Registro de Ventas</h2>
+                    <i class="fa-solid fa-list-check text-primary"></i>
+                    <h2>Registro de Ventas y Envíos</h2>
                 </div>
-
-                <div class="table-wrapper">
+                <div class="table-container">
                     <table>
                         <thead>
                             <tr>
-                                <th>ID Pedido</th>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Teléfono</th>
+                                <th>Correo</th>
+                                <th>Ciudad</th>
+                                <th>Dirección</th>
                                 <th>Referencia</th>
-                                <th>Talla</th>
+                                <th class="text-center">Talla</th>
                                 <th class="text-center">Cant.</th>
-                                <th>Cliente y Contacto</th>
-                                <th>Destino</th>
-                                <th>Estado / Pago</th>
+                                <th>Estado</th>
+                                <th>Soporte de Pago</th>
                                 <th class="text-center">Acción Logística</th>
                             </tr>
                         </thead>
                         <tbody id="orders-table-body">
-                            <!-- Los datos se inyectarán aquí vía JavaScript -->
+                            <!-- Datos inyectados vía JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <div id="custom-modal" class="modal-overlay hidden">
-        <div class="modal-backdrop" onclick="closeModal()"></div>
+    <!-- Modal Base -->
+    <div id="custom-modal" class="modal-overlay">
         <div class="modal-content">
-            <div class="modal-icon-container">
-                <i id="modal-icon" class="fa-solid fa-check"></i>
-            </div>
+            <div id="modal-icon" class="modal-icon success"><i class="fa-solid fa-check"></i></div>
             <h3 id="modal-title" class="modal-title">Título</h3>
-            <p id="modal-message" class="modal-message">Mensaje.</p>
-            <button class="btn-modal" onclick="closeModal()">
-                Entendido
-            </button>
+            <p id="modal-message" class="modal-text">Mensaje</p>
+            <button class="modal-btn" onclick="closeModal()">Entendido</button>
         </div>
     </div>
 
     <script>
-        // ⚠️ 1. PEGA AQUÍ TU URL DE GOOGLE APPS SCRIPT (Asegúrate de que termine en ?action=getPedidos)
+        
+        // ⚠️ PEGAR AQUÍ TU URL DE GOOGLE APPS SCRIPT (Que termine en ?action=getPedidos)
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
         
-        // ⚠️ 2. NÚMERO DE WHATSAPP DEL DOMICILIARIO (Código de país + número, sin el +)
+        // ⚠️ PEGAR AQUÍ EL NÚMERO DE TU DOMICILIARIO (Código país + número)
         const NUMERO_DOMICILIARIO = "573054813630"; 
 
         let dbOrders = [];
         const tableBody = document.getElementById('orders-table-body');
         const kpiPendientes = document.getElementById('kpi-pendientes');
         const modal = document.getElementById('custom-modal');
+        const modalOverlay = document.querySelector('.modal-overlay');
 
         function renderTable() {
             tableBody.innerHTML = '';
             let pendientes = 0;
 
             if (dbOrders.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="8" class="loader-container" style="color: var(--gray-500);">No se encontraron pedidos.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="12" class="loader-container" style="color: #94a3b8;">No se encontraron pedidos en la base de datos.</td></tr>`;
                 kpiPendientes.textContent = "0";
                 return;
             }
@@ -610,66 +377,48 @@
 
                 const tr = document.createElement('tr');
                 
+                // Formatear estado
                 let estadoClass = "status-ingresado";
-                let estadoText = order.estado || "Ingresado";
-                if(estadoText.toLowerCase().includes("empacado")) estadoClass = "status-empacado";
-                if(estadoText.toLowerCase().includes("normal")) estadoClass = "status-normal";
+                let estadoText = "Ingresado";
+                if(order.guia) {
+                    estadoClass = "status-despachado";
+                    estadoText = "Despachado";
+                }
 
                 tr.innerHTML = `
+                    <td class="td-id">#${order.id}</td>
+                    <td style="font-weight: 500;">${order.cliente}</td>
+                    <td class="td-contact"><i class="fa-solid fa-phone"></i> ${order.telefono}</td>
+                    <td class="td-contact"><i class="fa-solid fa-envelope"></i> ${order.correo}</td>
+                    <td class="td-location">${order.ciudad}</td>
+                    <td class="td-location"><i class="fa-solid fa-location-dot" style="color:#94a3b8; margin-right:4px;"></i> ${order.direccion}</td>
+                    <td class="td-ref" title="${order.referencia}">${order.referencia}</td>
+                    <td class="text-center"><span style="font-weight:600; color:#475569;">${order.talla}</span></td>
+                    <td class="text-center"><span class="td-cant">${order.cantidad}</span></td>
+                    
+                    <td><span class="status-badge ${estadoClass}">${estadoText}</span></td>
+                    
                     <td>
-                        <span class="td-id">${order.id || '#S/N'}</span>
-                    </td>
-                    <td>
-                        <div class="td-product" title="${order.articulo}">${order.articulo}</div>
-                    </td>
-                    <td>
-                        <span class="td-talla td-badge">${order.talla}</span>
-                    </td>
-                    <td class="text-center">
-                        <span class="td-cant">${order.cantidad}</span>
+                        ${order.linkPago && order.linkPago.includes('http') ? 
+                          `<a href="${order.linkPago}" target="_blank" class="link-soporte">
+                            <i class="fa-solid fa-receipt"></i> Soporte
+                           </a>` 
+                          : `<span class="no-soporte"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
                     </td>
                     
                     <td>
-                        <div class="td-client">${order.cliente}</div>
-                        <div class="td-contact"><i class="fa-solid fa-phone"></i> ${order.telefono}</div>
-                        <div class="td-contact"><i class="fa-solid fa-envelope"></i> ${order.correo}</div>
-                    </td>
-                    
-                    <td>
-                        <div class="td-city"><i class="fa-solid fa-map-location-dot" style="color: var(--boton-500); margin-right: 6px;"></i>${order.ciudad}</div>
-                        <div class="td-address" title="${order.direccion}">
-                            ${order.direccion}
-                        </div>
-                    </td>
-
-                    <td>
-                        <div>
-                            <span class="status-badge ${estadoClass}">${estadoText}</span>
-                        </div>
-                        <div>
-                            ${order.linkPago && order.linkPago.includes('http') ? 
-                              `<a href="${order.linkPago}" target="_blank" class="link-soporte">
-                                <i class="fa-solid fa-receipt"></i> Ver Soporte
-                               </a>` 
-                              : `<span class="no-soporte"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
-                        </div>
-                    </td>
-
-                    <td class="action-cell">
-                        <div class="action-container" id="celda-acciones-${index}">
+                        <div class="action-container" id="celda-acciones-${order.id}">
                             ${!order.guia ? `
-                                <button onclick="gestionarEnvio(${index}, 'nacional')" class="btn-action btn-nac">
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'nacional')" class="btn-action btn-guia" title="Generar Guía Nacional">
                                     <i class="fa-solid fa-truck-fast"></i> Guía Nac.
                                 </button>
-                                <button onclick="gestionarEnvio(${index}, 'local')" class="btn-action btn-local">
+                                <button onclick="gestionarEnvio('${order.id}', ${index}, 'local')" class="btn-action btn-moto" title="Enviar a Domiciliario">
                                     <i class="fa-brands fa-whatsapp"></i> Moto Domi
                                 </button>
                             ` : `
-                                <div class="despachado-badge">
-                                    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 18px; margin-bottom: 4px;"></i>
-                                    <span class="despachado-title">Despachado</span>
-                                    <span class="despachado-id">${order.guia}</span>
-                                </div>
+                                <span style="color: #10b981; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 4px;">
+                                    <i class="fa-solid fa-check-circle"></i> Listo
+                                </span>
                             `}
                         </div>
                     </td>
@@ -680,74 +429,85 @@
             kpiPendientes.textContent = pendientes;
         }
 
-        function gestionarEnvio(index, tipoEnvio) {
-            const btnContainer = document.getElementById(`celda-acciones-${index}`);
+        function gestionarEnvio(orderId, index, tipoEnvio) {
+            const btnContainer = document.getElementById(`celda-acciones-${orderId}`);
             const order = dbOrders[index];
-            const displayId = order.id || `P-${index}`;
             
-            btnContainer.innerHTML = `<div style="text-align: center; padding: 16px 0; background-color: white; border-radius: 12px; border: 1px solid var(--gray-100);"><div class="loader" style="margin-bottom: 8px;"></div><span style="font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase;">Procesando...</span></div>`;
+            btnContainer.innerHTML = `<span style="color: #64748b; font-size: 12px; font-weight: 600; display:flex; align-items:center; gap:6px;"><div class="loader" style="width:14px;height:14px;border-width:2px;"></div> Procesando...</span>`;
 
             setTimeout(() => {
                 if(tipoEnvio === 'local') {
-                    const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Dirección:* ${order.direccion}, ${order.ciudad}\n*Pedido:* ${displayId} - ${order.articulo} (Talla: ${order.talla})\n*Cantidad:* ${order.cantidad}\n\nPor favor confirmar recibido.`;
+                    const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Ciudad:* ${order.ciudad}\n*Dirección:* ${order.direccion}\n*Pedido:* #${order.id}\n*Artículo:* ${order.referencia} (Talla: ${order.talla} | Cant: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger.`;
+                    
                     window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
-                    showModal('WhatsApp Abierto', `Mensaje pre-armado enviado a tu domiciliario.\nSe marcará como: MOTO-${displayId}`);
-                    dbOrders[index].guia = "MOTO-" + displayId;
+                    showModal('¡WhatsApp Abierto!', `Se abrió una ventana para enviar los datos completos al Domiciliario.\n\nCódigo Interno: MOTO-${orderId}`, 'success');
+                    
+                    dbOrders[index].guia = "MOTO-" + orderId;
                 } else {
-                    const mockTracking = "BT" + Math.floor(100000000 + Math.random() * 900000000);
-                    showModal('Guía Creada', `Guía nacional generada con éxito.\nTracking: ${mockTracking}`);
+                    const mockTracking = "BO" + Math.floor(100000000 + Math.random() * 900000000);
+                    showModal('¡Guía Creada!', `Se ha simulado la creación de guía nacional.\n\nNúmero de Guía: ${mockTracking}\n\nImprime la etiqueta térmica desde el panel logístico.`, 'info');
                     dbOrders[index].guia = mockTracking;
                 }
+                
                 renderTable();
             }, 800);
         }
 
         async function cargarPedidosDesdeGoogle() {
-            tableBody.innerHTML = `<tr><td colspan="5" class="loader-container"><div class="loader"></div><p style="font-size: 14px; font-weight: 700; color: var(--gray-500);">Sincronizando con Excel...</p></td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="12" class="loader-container"><div class="loader"></div><p style="font-size: 14px; font-weight: 600;">Sincronizando con Google Sheets...</p></td></tr>`;
             
-            if(GOOGLE_WEB_APP_URL.includes("PEGAR_AQUI")) {
-                 tableBody.innerHTML = `<tr><td colspan="5" class="error-container">Error: Debes pegar la URL de tu Google Script en el código HTML (Línea ~300).</td></tr>`;
-                 return;
-            }
-
             try {
                 const respuesta = await fetch(GOOGLE_WEB_APP_URL, { redirect: "follow" });
                 if (!respuesta.ok) throw new Error(`Error HTTP: ${respuesta.status}`);
 
                 const datosExcel = await respuesta.json();
                 
-                dbOrders = datosExcel.filter(fila => fila['Nombre completo'] || fila['# Pedido'] || fila['Timestamp']).reverse().map((fila, i) => {
+                // Mapeo adaptado a las 12 columnas exactas
+                dbOrders = datosExcel.filter(fila => fila['# Pedido']).reverse().map((fila, i) => {
                     return {
-                        id: fila['# Pedido'] || fila['Timestamp']?.substring(0,10) || `00${i+1}`,
+                        id: fila['# Pedido'] || (i+1),
                         cliente: fila['Nombre completo'] || 'Sin nombre',
-                        telefono: fila['Telefono'] || 'N/A',
-                        correo: fila['Correo'] || 'Sin correo',
-                        direccion: fila['Dirección'] || 'N/A',
-                        ciudad: fila['Ciudad'] || 'N/A',
-                        articulo: fila['Referencia'] || 'Producto',
+                        telefono: fila['Telefono'] || 'Sin teléfono',
+                        correo: fila['Correo electrónico'] || fila['Correo'] || 'Sin correo',
+                        ciudad: fila['Ciudad'] || '',
+                        direccion: fila['Dirección'] || '',
+                        referencia: fila['Referencia'] || 'Producto',
                         talla: fila['Talla'] || 'N/A',
                         cantidad: fila['Cantidad'] || '1',
                         estado: fila['Estado'] || 'Ingresado',
-                        linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
+                        linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')),
                         guia: fila['Guia'] ? fila['Guia'] : null
                     };
                 });
                 
                 renderTable();
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="error-container">Fallo de Conexión: Verifica tu URL o permisos de Google Apps Script.<br><span style="font-size: 12px; font-weight: normal; margin-top: 8px; display: block;">Detalle: ${error.message}</span></td></tr>`;
-                console.error("Error:", error);
+                tableBody.innerHTML = `<tr><td colspan="12" class="error-container"><i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; margin-bottom: 8px; display:block;"></i> Error de Conexión. Verifica la URL de Google Script.<br><span style="font-size: 12px; font-weight: normal; margin-top: 4px; display: block; color: #64748b;">${error.message}</span></td></tr>`;
+                console.error(error);
             }
         }
 
-        function showModal(title, message) {
+        // Modales
+        function showModal(title, message, type) {
             document.getElementById('modal-title').textContent = title;
             document.getElementById('modal-message').textContent = message;
-            modal.classList.remove('hidden');
+            
+            const icon = document.getElementById('modal-icon');
+            if(type === 'success') {
+                icon.className = 'modal-icon success';
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                icon.className = 'modal-icon info';
+                icon.innerHTML = '<i class="fa-solid fa-truck-fast"></i>';
+            }
+            modalOverlay.classList.add('active');
         }
-        function closeModal() { modal.classList.add('hidden'); }
+        
+        function closeModal() { modalOverlay.classList.remove('active'); }
 
+        // Iniciar
         window.onload = cargarPedidosDesdeGoogle;
+
     </script>
 </body>
 </html>
