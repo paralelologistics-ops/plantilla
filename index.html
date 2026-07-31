@@ -5,140 +5,557 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bot-On | Panel Logístico</title>
     
-    <!-- ¡IMPORTANTE! Si tu navegador bloquea este script, la página se verá sin estilos -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuente e Íconos (Normalmente no se bloquean) -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
-                    colors: {
-                        boton: {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            900: '#134e4a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        body { background-color: #f3f4f6; }
+        :root {
+            --boton-50: #f0fdfa;
+            --boton-100: #ccfbf1;
+            --boton-500: #14b8a6;
+            --boton-600: #0d9488;
+            --boton-900: #134e4a;
+            
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --gray-950: #030712;
+
+            --bg-color: #f3f4f6;
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Reset y Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: var(--font-family); 
+            background-color: var(--bg-color); 
+            color: var(--gray-800); 
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+        /* Utilidades */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
         
-        .loader {
-            border: 3px solid #e2e8f0; border-radius: 50%; border-top: 3px solid #0d9488;
-            width: 24px; height: 24px; animation: spin 1s linear infinite;
+        /* Layout Principal */
+        .sidebar {
+            width: 256px;
+            background-color: var(--gray-900);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 20;
         }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--gray-50);
+        }
+
+        /* Sidebar Elements */
+        .sidebar-header {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            border-bottom: 1px solid var(--gray-800);
+            background-color: var(--gray-950);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--boton-500);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(to bottom right, var(--boton-500), var(--boton-600));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: white;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 0;
+        }
+
+        .nav-title {
+            padding: 0 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0 16px;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background-color: rgba(13, 148, 136, 0.2);
+            color: var(--boton-100);
+            border-radius: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid rgba(20, 184, 166, 0.2);
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid var(--gray-800);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: rgba(31, 41, 55, 0.5);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(55, 65, 81, 0.5);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-300);
+        }
+
+        /* Header Principal */
+        .main-header {
+            height: 80px;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 10;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .header-title p {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        .btn-sync {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: white;
+            border: 2px solid var(--gray-200);
+            color: var(--gray-700);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-sync:hover {
+            border-color: var(--boton-500);
+            color: var(--boton-600);
+        }
+
+        /* Contenido Principal */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 32px;
+        }
+
+        /* KPIs */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .kpi-card {
+            background-color: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            padding: 24px;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .kpi-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--gray-900);
+        }
+
+        .kpi-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .kpi-icon.orange { background-color: #ffedd5; color: #ea580c; }
+        .kpi-icon.emerald { background-color: #d1fae5; color: #059669; }
+
+        .status-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .status-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .status-sub {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 8px;
+        }
+
+        /* Tabla */
+        .table-container {
+            background-color: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+        
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: white;
+            color: var(--gray-500);
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        td {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        tbody tr:hover {
+            background-color: rgba(240, 253, 250, 0.5); /* var(--boton-50) */
+        }
+
+        /* Tipografías dentro de la tabla */
+        .td-id { font-size: 12px; font-weight: 700; color: var(--gray-400); margin-bottom: 4px; }
+        .td-product { font-size: 14px; font-weight: 700; color: var(--boton-600); max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+        .td-meta { font-size: 12px; color: var(--gray-500); font-weight: 500; margin-top: 4px; }
+        .td-badge { color: var(--gray-800); font-weight: 700; border: 1px solid var(--gray-200); border-radius: 4px; padding: 2px 4px; }
+        
+        .td-client { font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+        .td-contact { font-size: 12px; color: var(--gray-500); margin-bottom: 2px; }
+        .td-contact i { width: 16px; }
+
+        .td-city { font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+        .td-address { font-size: 12px; color: var(--gray-600); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: normal; }
+
+        /* Estados */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid;
+            margin-bottom: 8px;
+        }
+
+        .status-ingresado { background-color: var(--gray-100); color: var(--gray-700); border-color: var(--gray-200); }
+        .status-empacado { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+        .status-normal { background-color: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+
+        .link-soporte {
+            font-size: 12px; font-weight: 700; color: var(--boton-600);
+            background-color: var(--boton-50); padding: 6px 12px;
+            border-radius: 8px; border: 1px solid var(--boton-100);
+            text-decoration: none; display: inline-block;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .link-soporte:hover { color: var(--boton-900); }
+        .no-soporte { font-size: 12px; font-weight: 500; color: var(--gray-400); }
+
+        /* Botones Acción */
+        .action-cell { background-color: rgba(249, 250, 251, 0.5); vertical-align: middle; }
+        .action-container { display: flex; flex-direction: column; gap: 8px; width: 128px; margin: 0 auto; }
+        
+        .btn-action {
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: all 0.2s; border: none; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-nac { background-color: var(--gray-900); color: white; }
+        .btn-nac:hover { background-color: black; }
+        
+        .btn-local { background-color: #d1fae5; color: #065f46; }
+        .btn-local:hover { background-color: #a7f3d0; }
+
+        .despachado-badge {
+            width: 100%; padding: 8px 12px; background-color: white; border: 2px solid #d1fae5;
+            border-radius: 12px; text-align: center; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .despachado-title { font-size: 10px; font-weight: 700; color: var(--gray-500); text-transform: uppercase; display: block; }
+        .despachado-id { font-size: 12px; font-weight: 700; color: var(--gray-800); display: block; }
+
+        /* Loader */
+        .loader-container { padding: 48px 0; text-align: center; background-color: rgba(249, 250, 251, 0.5); }
+        .loader { border: 3px solid var(--gray-200); border-radius: 50%; border-top: 3px solid var(--boton-500); width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto 16px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .error-container { padding: 48px 0; text-align: center; background-color: #fef2f2; color: #dc2626; font-size: 14px; font-weight: 700; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+        }
+        .modal-backdrop { position: absolute; inset: 0; background-color: rgba(17, 24, 39, 0.4); backdrop-filter: blur(4px); }
+        .modal-content {
+            position: relative; background-color: white; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%; max-width: 384px; margin: 0 16px; padding: 32px; border: 1px solid var(--gray-100);
+        }
+        
+        .modal-icon-container {
+            width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px auto; background-color: #d1fae5; color: #059669; font-size: 24px;
+        }
+        
+        .modal-title { font-size: 20px; font-weight: 700; color: var(--gray-900); margin-bottom: 12px; text-align: center; }
+        .modal-message { color: var(--gray-600); margin-bottom: 32px; text-align: center; font-size: 14px; line-height: 1.6; white-space: pre-line; }
+        
+        .btn-modal {
+            width: 100%; padding: 12px 16px; background-color: var(--gray-900); color: white; border: none;
+            border-radius: 12px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .btn-modal:hover { background-color: var(--gray-800); }
+        
+        /* Ping Animation */
+        .ping-container { position: relative; display: flex; height: 16px; width: 16px; }
+        .ping-anim { position: absolute; display: inline-flex; height: 100%; width: 100%; border-radius: 50%; background-color: #34d399; opacity: 0.75; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        .ping-dot { position: relative; display: inline-flex; border-radius: 50%; height: 16px; width: 16px; background-color: #10b981; }
+        @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+
     </style>
 </head>
-<body class="text-gray-800 antialiased h-screen flex overflow-hidden">
+<body>
 
-    <aside class="w-64 bg-gray-900 text-white hidden md:flex flex-col h-full shadow-xl z-20">
-        <div class="h-20 flex items-center px-6 border-b border-gray-800 bg-gray-950">
-            <div class="flex items-center gap-3 text-boton-500">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-boton-500 to-boton-600 flex items-center justify-center text-white shadow-lg">
-                    <i class="fa-solid fa-power-off text-xl"></i>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-power-off"></i>
                 </div>
-                <span class="text-2xl font-bold tracking-tight text-white">Bot-On<span class="text-boton-500 text-3xl leading-none">.</span></span>
+                <span class="logo-text">Bot-On<span style="color: var(--boton-500);">.</span></span>
             </div>
         </div>
         
-        <nav class="flex-1 overflow-y-auto py-6">
-            <p class="px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Gestión Principal</p>
-            <ul class="space-y-2 px-4">
-                <li>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 bg-boton-600/20 text-boton-400 rounded-xl font-medium border border-boton-500/20">
-                        <i class="fa-solid fa-inbox w-5 text-center"></i> Pedidos Recientes
+        <nav class="sidebar-nav">
+            <p class="nav-title">Gestión Principal</p>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#">
+                        <i class="fa-solid fa-inbox text-center" style="width: 20px;"></i> Pedidos Recientes
                     </a>
                 </li>
             </ul>
         </nav>
         
-        <div class="p-4 border-t border-gray-800">
-            <div class="flex items-center gap-3 bg-gray-800/50 p-3 rounded-xl border border-gray-700/50">
-                <div class="w-9 h-9 rounded-full bg-gray-700 flex items-center justify-center text-sm font-bold text-gray-300">PT</div>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">PT</div>
                 <div>
-                    <p class="text-sm font-medium text-white">Paralelo Trendy</p>
-                    <p class="text-xs text-gray-400">Administrador</p>
+                    <p style="font-size: 14px; font-weight: 500; color: white;">Paralelo Trendy</p>
+                    <p style="font-size: 12px; color: var(--gray-400);">Administrador</p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-gray-50">
+    <main class="main-content">
         
-        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8 z-10 sticky top-0 shadow-sm">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-800">Centro de Despachos</h1>
-                <p class="text-sm text-gray-500 mt-0.5">Control logístico y generación de guías.</p>
+        <header class="main-header">
+            <div class="header-title">
+                <h1>Centro de Despachos</h1>
+                <p>Control logístico y generación de guías.</p>
             </div>
             
-            <button onclick="cargarPedidosDesdeGoogle()" class="flex items-center gap-2 px-5 py-2.5 bg-white border-2 border-gray-200 hover:border-boton-500 text-gray-700 hover:text-boton-600 rounded-xl text-sm font-bold transition-all shadow-sm">
+            <button onclick="cargarPedidosDesdeGoogle()" class="btn-sync">
                 <i class="fa-solid fa-rotate-right"></i> Sincronizar Datos
             </button>
         </header>
 
-        <div class="flex-1 overflow-auto p-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex justify-between items-start">
+        <div class="content-area">
+            <div class="kpi-grid">
+                <div class="kpi-card">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Pendientes de Guía</p>
-                        <div class="flex items-end gap-3">
-                            <h3 class="text-4xl font-extrabold text-gray-900" id="kpi-pendientes">--</h3>
-                        </div>
+                        <p class="kpi-title">Pendientes de Guía</p>
+                        <h3 class="kpi-value" id="kpi-pendientes">--</h3>
                     </div>
-                    <div class="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-2xl">
+                    <div class="kpi-icon orange">
                         <i class="fa-solid fa-box-open"></i>
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex justify-between items-start">
+                <div class="kpi-card">
                     <div>
-                        <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Estado del Sistema</p>
-                        <h3 class="text-lg font-bold text-gray-900 mt-2 flex items-center gap-3">
-                            <span class="relative flex h-4 w-4">
-                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                              <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
+                        <p class="kpi-title">Estado del Sistema</p>
+                        <div class="status-container">
+                            <span class="ping-container">
+                              <span class="ping-anim"></span>
+                              <span class="ping-dot"></span>
                             </span>
-                            Conexión Estable
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-2">Bot-On funcionando en línea</p>
+                            <span class="status-text">Conexión Estable</span>
+                        </div>
+                        <p class="status-sub">Bot-On funcionando en línea</p>
                     </div>
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl">
+                    <div class="kpi-icon emerald">
                         <i class="fa-brands fa-whatsapp"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                    <h2 class="text-lg font-bold text-gray-800"><i class="fa-solid fa-list-check text-boton-500 mr-2"></i> Registro de Ventas</h2>
+            <div class="table-container">
+                <div class="table-header">
+                    <h2><i class="fa-solid fa-list-check" style="color: var(--boton-500); margin-right: 8px;"></i> Registro de Ventas</h2>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm whitespace-nowrap">
-                        <thead class="bg-white text-gray-500 font-bold border-b border-gray-200 text-xs uppercase tracking-wider">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
                             <tr>
-                                <th class="px-6 py-4">Ref. y Prenda</th>
-                                <th class="px-6 py-4">Cliente y Contacto</th>
-                                <th class="px-6 py-4">Destino</th>
-                                <th class="px-6 py-4">Estado / Pago</th>
-                                <th class="px-6 py-4 text-center">Acción Logística</th>
+                                <th>Ref. y Prenda</th>
+                                <th>Cliente y Contacto</th>
+                                <th>Destino</th>
+                                <th>Estado / Pago</th>
+                                <th class="text-center">Acción Logística</th>
                             </tr>
                         </thead>
-                        <tbody id="orders-table-body" class="divide-y divide-gray-100">
+                        <tbody id="orders-table-body">
                             <!-- Los datos se inyectarán aquí vía JavaScript -->
                         </tbody>
                     </table>
@@ -147,15 +564,15 @@
         </div>
     </main>
 
-    <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
-        <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm" onclick="closeModal()"></div>
-        <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-sm mx-4 p-8 border border-gray-100">
-            <div id="modal-icon-container" class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 mx-auto bg-emerald-100 text-emerald-600">
-                <i id="modal-icon" class="fa-solid fa-check text-3xl"></i>
+    <div id="custom-modal" class="modal-overlay hidden">
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-icon-container">
+                <i id="modal-icon" class="fa-solid fa-check"></i>
             </div>
-            <h3 id="modal-title" class="text-xl font-bold text-gray-900 mb-3 text-center">Título</h3>
-            <p id="modal-message" class="text-gray-600 mb-8 text-center text-sm leading-relaxed whitespace-pre-line">Mensaje.</p>
-            <button class="w-full py-3 px-4 bg-gray-900 hover:bg-gray-800 text-white rounded-xl font-bold transition-colors shadow-md" onclick="closeModal()">
+            <h3 id="modal-title" class="modal-title">Título</h3>
+            <p id="modal-message" class="modal-message">Mensaje.</p>
+            <button class="btn-modal" onclick="closeModal()">
                 Entendido
             </button>
         </div>
@@ -178,7 +595,7 @@
             let pendientes = 0;
 
             if (dbOrders.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-12 text-gray-500 bg-gray-50/50">No se encontraron pedidos.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="loader-container" style="color: var(--gray-500);">No se encontraron pedidos.</td></tr>`;
                 kpiPendientes.textContent = "0";
                 return;
             }
@@ -187,62 +604,61 @@
                 if(!order.guia) pendientes++;
 
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-boton-50/50 transition-colors";
                 
-                let estadoClass = "bg-gray-100 text-gray-700 border-gray-200";
+                let estadoClass = "status-ingresado";
                 let estadoText = order.estado || "Ingresado";
-                if(estadoText.toLowerCase().includes("empacado")) estadoClass = "bg-blue-50 text-blue-700 border-blue-200";
-                if(estadoText.toLowerCase().includes("normal")) estadoClass = "bg-orange-50 text-orange-700 border-orange-200";
+                if(estadoText.toLowerCase().includes("empacado")) estadoClass = "status-empacado";
+                if(estadoText.toLowerCase().includes("normal")) estadoClass = "status-normal";
 
                 tr.innerHTML = `
-                    <td class="px-6 py-5">
-                        <div class="text-xs font-bold text-gray-400 mb-1">ID: ${order.id || '#S/N'}</div>
-                        <div class="text-sm font-bold text-boton-600 truncate max-w-[150px]">${order.articulo}</div>
-                        <div class="text-xs text-gray-500 font-medium mt-1">
-                            Talla: <span class="text-gray-800 font-bold border border-gray-200 rounded px-1">${order.talla}</span> &nbsp;&bull;&nbsp; Cant: ${order.cantidad}
+                    <td>
+                        <div class="td-id">ID: ${order.id || '#S/N'}</div>
+                        <div class="td-product" title="${order.articulo}">${order.articulo}</div>
+                        <div class="td-meta">
+                            Talla: <span class="td-badge">${order.talla}</span> &nbsp;&bull;&nbsp; Cant: ${order.cantidad}
                         </div>
                     </td>
                     
-                    <td class="px-6 py-5">
-                        <div class="font-bold text-gray-800 mb-1">${order.cliente}</div>
-                        <div class="text-xs text-gray-500 mb-0.5"><i class="fa-solid fa-phone w-3"></i> ${order.telefono}</div>
-                        <div class="text-xs text-gray-500 truncate max-w-[150px]"><i class="fa-solid fa-envelope w-3"></i> ${order.correo}</div>
+                    <td>
+                        <div class="td-client">${order.cliente}</div>
+                        <div class="td-contact"><i class="fa-solid fa-phone"></i> ${order.telefono}</div>
+                        <div class="td-contact"><i class="fa-solid fa-envelope"></i> ${order.correo}</div>
                     </td>
                     
-                    <td class="px-6 py-5">
-                        <div class="font-bold text-gray-800 mb-1"><i class="fa-solid fa-map-location-dot text-boton-500 mr-1.5"></i>${order.ciudad}</div>
-                        <div class="text-xs text-gray-600 truncate max-w-[180px] whitespace-normal" title="${order.direccion}">
+                    <td>
+                        <div class="td-city"><i class="fa-solid fa-map-location-dot" style="color: var(--boton-500); margin-right: 6px;"></i>${order.ciudad}</div>
+                        <div class="td-address" title="${order.direccion}">
                             ${order.direccion}
                         </div>
                     </td>
 
-                    <td class="px-6 py-5">
-                        <div class="mb-2">
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold border ${estadoClass}">${estadoText}</span>
+                    <td>
+                        <div>
+                            <span class="status-badge ${estadoClass}">${estadoText}</span>
                         </div>
                         <div>
                             ${order.linkPago && order.linkPago.includes('http') ? 
-                              `<a href="${order.linkPago}" target="_blank" class="text-xs font-bold text-boton-600 hover:text-boton-800 bg-boton-50 px-3 py-1.5 rounded-lg border border-boton-100 shadow-sm transition-colors">
+                              `<a href="${order.linkPago}" target="_blank" class="link-soporte">
                                 <i class="fa-solid fa-receipt"></i> Ver Soporte
                                </a>` 
-                              : `<span class="text-xs font-medium text-gray-400"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
+                              : `<span class="no-soporte"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
                         </div>
                     </td>
 
-                    <td class="px-6 py-5 bg-gray-50/50 align-middle">
-                        <div class="flex flex-col gap-2 w-32 mx-auto" id="celda-acciones-${index}">
+                    <td class="action-cell">
+                        <div class="action-container" id="celda-acciones-${index}">
                             ${!order.guia ? `
-                                <button onclick="gestionarEnvio(${index}, 'nacional')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-900 hover:bg-black text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+                                <button onclick="gestionarEnvio(${index}, 'nacional')" class="btn-action btn-nac">
                                     <i class="fa-solid fa-truck-fast"></i> Guía Nac.
                                 </button>
-                                <button onclick="gestionarEnvio(${index}, 'local')" class="w-full flex items-center justify-center gap-2 px-3 py-2 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg text-xs font-bold transition-all shadow-sm">
+                                <button onclick="gestionarEnvio(${index}, 'local')" class="btn-action btn-local">
                                     <i class="fa-brands fa-whatsapp"></i> Moto Domi
                                 </button>
                             ` : `
-                                <div class="w-full py-2 px-3 bg-white border-2 border-emerald-100 rounded-xl text-center shadow-sm">
-                                    <i class="fa-solid fa-circle-check text-emerald-500 mb-1 text-lg block"></i>
-                                    <span class="text-[10px] font-bold text-gray-500 uppercase block">Despachado</span>
-                                    <span class="text-xs font-bold text-gray-800 block">${order.guia}</span>
+                                <div class="despachado-badge">
+                                    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 18px; margin-bottom: 4px;"></i>
+                                    <span class="despachado-title">Despachado</span>
+                                    <span class="despachado-id">${order.guia}</span>
                                 </div>
                             `}
                         </div>
@@ -259,7 +675,7 @@
             const order = dbOrders[index];
             const displayId = order.id || `P-${index}`;
             
-            btnContainer.innerHTML = `<div class="w-full py-4 flex flex-col items-center justify-center bg-white rounded-xl border border-gray-100 shadow-sm"><div class="loader mb-2"></div><span class="text-[10px] font-bold text-gray-400 uppercase">Procesando...</span></div>`;
+            btnContainer.innerHTML = `<div style="text-align: center; padding: 16px 0; background-color: white; border-radius: 12px; border: 1px solid var(--gray-100);"><div class="loader" style="margin-bottom: 8px;"></div><span style="font-size: 10px; font-weight: 700; color: var(--gray-400); text-transform: uppercase;">Procesando...</span></div>`;
 
             setTimeout(() => {
                 if(tipoEnvio === 'local') {
@@ -277,10 +693,10 @@
         }
 
         async function cargarPedidosDesdeGoogle() {
-            tableBody.innerHTML = `<tr><td colspan="5" class="py-16 text-center bg-gray-50/50"><div class="loader mx-auto mb-4 border-boton-500"></div><p class="text-sm font-bold text-gray-500">Sincronizando con Excel...</p></td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="5" class="loader-container"><div class="loader"></div><p style="font-size: 14px; font-weight: 700; color: var(--gray-500);">Sincronizando con Excel...</p></td></tr>`;
             
             if(GOOGLE_WEB_APP_URL.includes("PEGAR_AQUI")) {
-                 tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Error: Debes pegar la URL de tu Google Script en el código HTML (Línea ~190).</p></td></tr>`;
+                 tableBody.innerHTML = `<tr><td colspan="5" class="error-container">Error: Debes pegar la URL de tu Google Script en el código HTML (Línea ~300).</td></tr>`;
                  return;
             }
 
@@ -290,7 +706,6 @@
 
                 const datosExcel = await respuesta.json();
                 
-                // Mapeo adaptado a las columnas exactas de tu Excel
                 dbOrders = datosExcel.filter(fila => fila['Nombre completo'] || fila['# Pedido'] || fila['Timestamp']).reverse().map((fila, i) => {
                     return {
                         id: fila['# Pedido'] || fila['Timestamp']?.substring(0,10) || `00${i+1}`,
@@ -303,7 +718,6 @@
                         talla: fila['Talla'] || 'N/A',
                         cantidad: fila['Cantidad'] || '1',
                         estado: fila['Estado'] || 'Ingresado',
-                        // Busca cualquier enlace de drive en la fila
                         linkPago: Object.values(fila).find(val => typeof val === 'string' && val.includes('drive.google.com')) || null, 
                         guia: fila['Guia'] ? fila['Guia'] : null
                     };
@@ -311,7 +725,7 @@
                 
                 renderTable();
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="py-12 text-center bg-red-50/50"><p class="text-sm font-bold text-red-600">Fallo de Conexión: Verifica tu URL o permisos de Google Apps Script.<br>Detalle: ${error.message}</p></td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="5" class="error-container">Fallo de Conexión: Verifica tu URL o permisos de Google Apps Script.<br><span style="font-size: 12px; font-weight: normal; margin-top: 8px; display: block;">Detalle: ${error.message}</span></td></tr>`;
                 console.error("Error:", error);
             }
         }
