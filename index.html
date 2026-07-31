@@ -42,8 +42,8 @@
         header h1 { font-size: 20px; font-weight: 600; color: #0f172a; }
         .btn-sync { background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--text-main); cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .btn-sync:hover { background-color: #f8fafc; border-color: #cbd5e1; }
-        .content-area { padding: 32px; overflow-y: auto; flex-grow: 1; }
         
+        .content-area { padding: 32px; overflow-y: auto; flex-grow: 1; }
         .kpi-grid { display: flex; gap: 24px; margin-bottom: 32px; }
         .kpi-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; flex: 1; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         .kpi-info h3 { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
@@ -56,36 +56,47 @@
         .table-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; }
         .table-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
         .table-header h2 { font-size: 16px; font-weight: 600; color: #0f172a; }
-        .table-container { width: 100%; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 1400px; }
-        th, td { padding: 16px 24px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border-color); }
+        
+        /* Ajuste para scroll horizontal visible si la pantalla es muy pequeña */
+        .table-container { width: 100%; overflow-x: auto; padding-bottom: 10px; }
+        /* Scrollbar personalizado para que el usuario note que puede hacer scroll */
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .table-container::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        table { width: 100%; border-collapse: collapse; min-width: 1200px; }
+        th, td { padding: 14px 16px; text-align: left; font-size: 13px; border-bottom: 1px solid var(--border-color); }
         th { background-color: #f8fafc; font-weight: 600; color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; white-space: nowrap; }
         tbody tr:hover { background-color: #f8fafc; }
 
-        .td-id { font-weight: 700; color: var(--primary); }
-        .td-contact i { color: #94a3b8; width: 16px; text-align: center; margin-right: 4px; }
-        .td-contact div { margin-bottom: 4px; white-space: nowrap; }
-        .td-contact div:last-child { margin-bottom: 0; }
-        .td-location { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .td-ref { font-weight: 500; color: #0f172a; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .td-id { font-weight: 700; color: var(--primary); width: 60px; }
+        .td-cliente { font-weight: 500; max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Columnas de contacto y ubicación recortadas para ahorrar espacio */
+        .td-contact { max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #475569; }
+        .td-contact i { color: #94a3b8; width: 14px; text-align: center; margin-right: 4px; }
+        
+        .td-location { max-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .td-ref { font-weight: 500; color: #0f172a; max-width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .td-cant { font-weight: 700; color: #334155; background: #f1f5f9; padding: 2px 8px; border-radius: 4px;}
         .text-center { text-align: center; }
 
         .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-        .status-ingresado { background-color: #f1f5f9; color: #475569; }
-        .status-despachado { background-color: #dcfce7; color: #15803d; }
+        .status-ingresado { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+        .status-despachado { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 
-        .link-soporte { display: inline-flex; align-items: center; gap: 6px; color: #2563eb; font-weight: 500; text-decoration: none; background: #eff6ff; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; }
+        .link-soporte { display: inline-flex; align-items: center; gap: 6px; color: #2563eb; font-weight: 500; text-decoration: none; background: #eff6ff; padding: 6px 10px; border-radius: 6px; transition: all 0.2s; white-space: nowrap; font-size: 12px;}
         .link-soporte:hover { background: #dbeafe; color: #1d4ed8; }
         .no-soporte { color: #94a3b8; font-style: italic; font-size: 12px; white-space: nowrap;}
 
-        .action-container { display: flex; gap: 8px; justify-content: center; }
-        .btn-action { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
+        .action-container { display: flex; gap: 6px; justify-content: center; }
+        .btn-action { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; white-space: nowrap; }
         .btn-guia { background-color: #f8fafc; border-color: #cbd5e1; color: #334155; }
         .btn-guia:hover { background-color: #f1f5f9; border-color: #94a3b8; }
         .btn-moto { background-color: #ecfdf5; border-color: #a7f3d0; color: #059669; }
         .btn-moto:hover { background-color: #d1fae5; border-color: #6ee7b7; }
-        .btn-notify { background-color: #10b981; border-color: #059669; color: white; }
+        .btn-notify { background-color: #10b981; border-color: #059669; color: white; width: 100%;}
         .btn-notify:hover { background-color: #059669; }
 
         .loader-container { padding: 40px; text-align: center; color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
@@ -152,9 +163,10 @@
 
             <div class="table-section">
                 <div class="table-header">
-                    <i class="fa-solid fa-list-check" style="color: var(--primary);"></i>
+                    <i class="fa-solid fa-list-check" style="color: var(--primary); font-size: 18px;"></i>
                     <h2>Registro de Ventas y Envíos</h2>
                 </div>
+                <!-- Este contenedor permite hacer scroll si la pantalla es pequeña -->
                 <div class="table-container">
                     <table>
                         <thead>
@@ -168,9 +180,9 @@
                                 <th>Referencia</th>
                                 <th class="text-center">Talla</th>
                                 <th class="text-center">Cant.</th>
-                                <th>Estado</th>
-                                <th>Soporte de Pago</th>
-                                <th class="text-center">Acción Logística</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Soporte</th>
+                                <th class="text-center" style="min-width: 180px;">Acción Logística</th>
                             </tr>
                         </thead>
                         <tbody id="orders-table-body">
@@ -192,7 +204,6 @@
     </div>
 
     <script>
-        
         // ⚠️ TUS VARIABLES EXACTAS:
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwFO8UkLKm3kAEX8eFp1iffO1qvOuzpl_GQ-I-aJvIwp6u8KmJ9vbRQpj6-rQzccZpF/exec?action=getPedidos";
         const NUMERO_DOMICILIARIO = "573054813630"; 
@@ -225,28 +236,29 @@
                     estadoText = "Despachado";
                 }
 
-                // Generar 12 columnas exactas
+                // Generar 12 columnas exactas (Respetando diseño acortado)
                 tr.innerHTML = `
                     <td class="td-id">#${order.id}</td>
-                    <td style="font-weight: 500;">${order.cliente}</td>
+                    <td class="td-cliente" title="${order.cliente}">${order.cliente}</td>
                     <td class="td-contact"><i class="fa-solid fa-phone"></i> ${order.telefono}</td>
-                    <td class="td-contact"><i class="fa-solid fa-envelope"></i> ${order.correo}</td>
+                    <td class="td-contact" title="${order.correo}"><i class="fa-solid fa-envelope"></i> ${order.correo}</td>
                     <td class="td-location" title="${order.ciudad}">${order.ciudad}</td>
-                    <td class="td-location" title="${order.direccion}"><i class="fa-solid fa-location-dot" style="color:#94a3b8; margin-right:4px;"></i> ${order.direccion}</td>
+                    <td class="td-location" title="${order.direccion}"><i class="fa-solid fa-location-dot"></i> ${order.direccion}</td>
                     <td class="td-ref" title="${order.referencia}">${order.referencia}</td>
                     <td class="text-center"><span style="font-weight:600; color:#475569;">${order.talla}</span></td>
                     <td class="text-center"><span class="td-cant">${order.cantidad}</span></td>
                     
-                    <td><span class="status-badge ${estadoClass}">${estadoText}</span></td>
+                    <td class="text-center"><span class="status-badge ${estadoClass}">${estadoText}</span></td>
                     
-                    <td>
+                    <td class="text-center">
                         ${order.linkPago && order.linkPago.includes('http') ? 
-                          `<a href="${order.linkPago}" target="_blank" class="link-soporte">
+                          `<a href="${order.linkPago}" target="_blank" class="link-soporte" title="Ver comprobante">
                             <i class="fa-solid fa-receipt"></i> Soporte
                            </a>` 
-                          : `<span class="no-soporte"><i class="fa-solid fa-circle-exclamation"></i> Sin soporte</span>`}
+                          : `<span class="no-soporte"><i class="fa-solid fa-circle-exclamation"></i> Vacío</span>`}
                     </td>
                     
+                    <!-- COLUMNA 12: ACCIÓN LOGÍSTICA INTACTA -->
                     <td>
                         <div class="action-container" id="celda-acciones-${order.id}">
                             ${!order.guia ? `
@@ -254,7 +266,7 @@
                                     <i class="fa-solid fa-truck-fast"></i> Guía Nac.
                                 </button>
                                 <button onclick="gestionarEnvio('${order.id}', ${index}, 'local')" class="btn-action btn-moto" title="Enviar a Domiciliario">
-                                    <i class="fa-brands fa-whatsapp"></i> Moto Domi
+                                    <i class="fa-brands fa-whatsapp"></i> Moto
                                 </button>
                             ` : `
                                 <button onclick="notificarCliente('${order.id}', ${index})" class="btn-action btn-notify" title="Avisar al cliente por WhatsApp">
@@ -274,7 +286,7 @@
             const btnContainer = document.getElementById(`celda-acciones-${orderId}`);
             const order = dbOrders[index];
             
-            btnContainer.innerHTML = `<span style="color: #64748b; font-size: 12px; font-weight: 600; display:flex; align-items:center; gap:6px;"><div class="loader" style="width:14px;height:14px;border-width:2px;"></div> Procesando...</span>`;
+            btnContainer.innerHTML = `<span style="color: #64748b; font-size: 11px; font-weight: 600; display:flex; align-items:center; gap:6px; justify-content:center;"><div class="loader" style="width:12px;height:12px;border-width:2px;"></div> Procesando...</span>`;
 
             setTimeout(() => {
                 if(tipoEnvio === 'local') {
@@ -282,17 +294,17 @@
                     const msgDomi = `🛵 *NUEVO DOMICILIO BOT-ON*\n\n*Cliente:* ${order.cliente}\n*Celular:* ${order.telefono}\n*Ciudad:* ${order.ciudad}\n*Dirección:* ${order.direccion}\n*Pedido:* #${order.id}\n*Artículo:* ${order.referencia} (Talla: ${order.talla} | Cant: ${order.cantidad})\n\nPor favor confirmar recibido para ir a recoger.`;
                     
                     window.open(`https://wa.me/${NUMERO_DOMICILIARIO}?text=${encodeURIComponent(msgDomi)}`, '_blank');
-                    showModal('¡Datos enviados al Domiciliario!', `Se abrió WhatsApp para enviar los datos al Domi.\n\nEl sistema ahora habilitará el botón para que le notifiques al cliente.`, 'success');
+                    showModal('¡Datos enviados al Domiciliario!', `Se abrió WhatsApp para enviar los datos a la moto.\n\nEl sistema ahora habilitará el botón verde para notificar al cliente.`, 'success');
                     
                     dbOrders[index].guia = "MOTO-" + orderId;
                 } else {
                     // Lógica para Guía Nacional Simulada
                     const mockTracking = "BO" + Math.floor(100000000 + Math.random() * 900000000);
-                    showModal('¡Guía Creada Exitosamente!', `Se ha simulado la creación de guía nacional.\n\nNúmero de Guía: ${mockTracking}\n\nEl sistema ahora habilitará el botón para que le notifiques al cliente.`, 'info');
+                    showModal('¡Guía Creada Exitosamente!', `Se simuló la creación de guía nacional.\n\nNúmero: ${mockTracking}\n\nEl sistema ahora habilitará el botón verde para notificar al cliente.`, 'info');
                     dbOrders[index].guia = mockTracking;
                 }
                 
-                renderTable(); 
+                renderTable(); // Esto hace que aparezca el botón "Notificar Cliente"
             }, 800);
         }
 
@@ -306,19 +318,18 @@
                 mensaje += `🚚 Tu pedido fue enviado por transportadora nacional.\n*Número de Guía:* ${order.guia}\n\nPuedes rastrearlo en la página de la transportadora.`;
             }
             
-            // Extraer solo números del celular
+            // Limpiar número del cliente para abrir WhatsApp
             let telefono = order.telefono.toString().replace(/\D/g, '');
-            // Formatear para Colombia si tiene 10 dígitos
             if (telefono.length === 10) {
                 telefono = '57' + telefono;
             }
 
             window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank');
-            showModal('¡Avisando al cliente!', `Se ha abierto WhatsApp para enviarle el número de guía o estado al cliente ${order.cliente}.`, 'success');
+            showModal('¡Avisando al cliente!', `Se ha abierto WhatsApp para enviarle el estado al cliente ${order.cliente}.`, 'success');
         }
 
         async function cargarPedidosDesdeGoogle() {
-            tableBody.innerHTML = `<tr><td colspan="12" class="loader-container"><div class="loader"></div><p style="font-size: 14px; font-weight: 600;">Sincronizando con Google Sheets...</p></td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="12" class="loader-container"><div class="loader"></div><p style="font-size: 14px; font-weight: 600;">Sincronizando base de datos...</p></td></tr>`;
             
             try {
                 const respuesta = await fetch(GOOGLE_WEB_APP_URL, { redirect: "follow" });
@@ -326,7 +337,7 @@
 
                 const datosExcel = await respuesta.json();
                 
-                // Mapear los datos exactos que vienen de Sheets a las 12 columnas
+                // Mapear exactamente las 12 columnas desde Sheets
                 dbOrders = datosExcel.filter(fila => fila['# Pedido']).reverse().map((fila, i) => {
                     return {
                         id: fila['# Pedido'] || (i+1),
@@ -346,7 +357,7 @@
                 
                 renderTable();
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan="12" class="error-container"><i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; margin-bottom: 8px; display:block;"></i> Error de Conexión. Verifica la URL de Google Script.<br><span style="font-size: 12px; font-weight: normal; margin-top: 4px; display: block; color: #64748b;">${error.message}</span></td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="12" class="error-container"><i class="fa-solid fa-triangle-exclamation" style="font-size: 24px; margin-bottom: 8px; display:block;"></i> Error de Conexión.<br><span style="font-size: 12px; font-weight: normal; margin-top: 4px; display: block; color: #64748b;">${error.message}</span></td></tr>`;
                 console.error(error);
             }
         }
